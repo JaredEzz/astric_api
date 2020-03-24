@@ -12,18 +12,17 @@ public class User implements Comparable<User> {
     private String alias;
     private String imageUrl;
 
-    private User() {}
-
-    public User(String firstName, String lastName, String imageURL) {
-        this(firstName, lastName, String.format("@%s%s", firstName, lastName), imageURL);
-    }
-
-    public User(String firstName, String lastName, String alias, String imageURL) {
+    public User(String firstName, String lastName, String alias, String imageUrl, String username) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.alias = alias;
-        this.imageUrl = imageURL;
+        this.imageUrl = imageUrl;
+        this.username = username;
     }
+
+    private String username;
+
+    private User() {}
 
     public String getFirstName() {
         return firstName;
@@ -59,6 +58,14 @@ public class User implements Comparable<User> {
 
     public void setImageUrl(String imageUrl) {
         this.imageUrl = imageUrl;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     @Override

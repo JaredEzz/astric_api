@@ -133,7 +133,7 @@ public class UserGenerator {
             }
 
             String lastName = surnames[random.nextInt(surnames.length)];
-            User user = new User(firstName, lastName, imageULR);
+            User user = new User(firstName, lastName, firstName+lastName, imageULR, firstName+lastName);
 
             if(!users.contains(user)) {
                 users.add(user);

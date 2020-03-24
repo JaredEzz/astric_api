@@ -16,12 +16,12 @@ public class PostDAOImpl implements PostDAO {
     private List<Post> postList = new ArrayList<>();
 
     private List<User> hardCodedUsers = Arrays.asList(
-            new User("Jared", "Hasson", "@jaredezz", "assets/images/astric.png"),
-            new User("Thomas", "Banks", "@tb", "assets/images/man_profile.png"),
-            new User("Wendy", "Watts", "@wwatts", "assets/images/woman_profile.png"),
-            new User("Orville", "Klaus", "@santa", "assets/images/santa.png"),
-            new User("Manny", "Woodpecker", "@birdlover", "assets/images/woodpecker.jpg"),
-            new User("Fanny", "Follower", "@ff", "assets/images/fanny_pack.jpeg"));
+            new User("Jared", "Hasson", "@jaredezz", "assets/images/astric.png", "jaredhasson"),
+            new User("Thomas", "Banks", "@tb", "assets/images/man_profile.png", "tbanks"),
+            new User("Wendy", "Watts", "@wwatts", "assets/images/woman_profile.png", "wendyw"),
+            new User("Orville", "Klaus", "@santa", "assets/images/santa.png", "ovk"),
+            new User("Manny", "Woodpecker", "@birdlover", "assets/images/woodpecker.jpg", "mannywp"),
+            new User("Fanny", "Follower", "@ff", "assets/images/fanny_pack.jpeg", "follo"));
 
     private List<Post> hardCodedPosts = Arrays.asList(
             new Post(hardCodedUsers.get(0), "20121002", "This is a good website https://google.com @tb @birdlover"),
@@ -45,7 +45,7 @@ public class PostDAOImpl implements PostDAO {
     @Override
     public FeedResponse getFeed(FeedRequest request) {
         assert request.getLimit() > 0;
-        assert request.getUser() != null;
+        assert request.getUsername() != null;
 
         //make a list of the posts to return based on if the user is
         //following the originating user or is the originating user
