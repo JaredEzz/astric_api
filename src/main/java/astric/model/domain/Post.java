@@ -41,4 +41,11 @@ public class Post {
     public void setMessage(String message) {
         this.message = message;
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) return true;
+        Post comparePost = (Post) obj;
+        return comparePost.timestamp.equals(this.timestamp) && comparePost.message.equals(this.message);
+    }
 }

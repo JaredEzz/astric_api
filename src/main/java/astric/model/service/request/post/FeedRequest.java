@@ -5,14 +5,15 @@ import astric.model.domain.User;
 
 public class FeedRequest {
     private int limit;
-    private User user;
+    private String username;
     private Post lastPost;
+    private String authToken;
 
     private FeedRequest(){}
 
-    public FeedRequest(int limit, User user, Post lastPost) {
+    public FeedRequest(int limit, String username, Post lastPost, String authToken) {
         this.limit = limit;
-        this.user = user;
+        this.username = username;
         this.lastPost = lastPost;
     }
 
@@ -24,12 +25,12 @@ public class FeedRequest {
         this.limit = limit;
     }
 
-    public User getUser() {
-        return user;
+    public String getUsername() {
+        return username;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public Post getLastPost() {
@@ -38,5 +39,13 @@ public class FeedRequest {
 
     public void setLastPost(Post lastPost) {
         this.lastPost = lastPost;
+    }
+
+    public String getAuthToken() {
+        return authToken;
+    }
+
+    public void setAuthToken(String authToken) {
+        this.authToken = authToken;
     }
 }
