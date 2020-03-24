@@ -56,6 +56,7 @@ public class UserDAOImpl implements UserDAO {
 
     @Override
     public LogoutResponse logout(LogoutRequest request) {
+        // (milestone 4 - invalidate authToken)
         return new LogoutResponse(true);
     }
 }
