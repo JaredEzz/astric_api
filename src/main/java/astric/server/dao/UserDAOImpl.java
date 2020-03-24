@@ -8,7 +8,16 @@ import astric.model.service.response.account.LoginResponse;
 import astric.model.service.response.account.LogoutResponse;
 import astric.model.service.response.account.SignUpResponse;
 
+import java.util.HashMap;
+import java.util.Map;
+import java.util.UUID;
+
 public class UserDAOImpl implements UserDAO {
+    private Map<String, String> usernamePasswordMap = new HashMap<String, String>() {{
+        put("username", "password");
+        put("jaredhasson", "password");
+    }};
+
     @Override
     public SignUpResponse signUp(SignUpRequest request) {
         // TODO check username against existing database, if username doesn't exist,
@@ -19,8 +28,16 @@ public class UserDAOImpl implements UserDAO {
 
     @Override
     public LoginResponse login(LoginRequest request) {
-        // TODO check username and password
-        return new LoginResponse(true);
+        String username = request.getUsername();
+        String password = request.getPassword();
+        String expectedPassword = usernamePasswordMap.get(username);
+        if(expectedPassword != null && expectedPassword.equals(password)){
+//            String auth = UUID.randomUUID().toString();
+            String auth = "ae04c02a-bc73-4b58-984d-e5038c6f7c02";
+            return new LoginResponse(true, auth);
+        } else {
+            return new LoginResponse(false, "Incorrect Username/Password", null);
+        }
     }
 
     @Override

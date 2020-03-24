@@ -1,9 +1,7 @@
 package astric.server.lambda.account;
 
 import astric.model.service.AccountService;
-import astric.model.service.request.account.LoginRequest;
 import astric.model.service.request.account.LogoutRequest;
-import astric.model.service.response.account.LoginResponse;
 import astric.model.service.response.account.LogoutResponse;
 import astric.server.service.AccountServiceImpl;
 import com.amazonaws.services.lambda.runtime.Context;
