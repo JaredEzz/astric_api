@@ -37,7 +37,8 @@ public class FollowingDAOImpl implements FollowingDAO {
                     responseFollowees.add(allFollowees.get(followeesIndex));
                 }
 
-                hasMorePages = followeesIndex < allFollowees.size();
+                if (followeesIndex < allFollowees.size()) hasMorePages = true;
+                else hasMorePages = false;
             }
         }
 

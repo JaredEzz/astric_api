@@ -1,4 +1,4 @@
-package astric.model.service.post;
+package astric.model.service.request.post;
 
 import astric.model.domain.Post;
 
