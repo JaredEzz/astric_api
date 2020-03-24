@@ -7,11 +7,19 @@ import astric.model.service.response.Response;
  * A response for a {@link SignUpRequest}.
  */
 public class SignUpResponse extends Response {
-    public SignUpResponse(boolean success) {
-        super(success);
+    public String getAuthToken() {
+        return authToken;
     }
 
-    public SignUpResponse(boolean success, String message) {
+    private String authToken;
+
+    public SignUpResponse(boolean success, String authToken) {
+        super(success);
+        this.authToken = authToken;
+    }
+
+    public SignUpResponse(boolean success, String authToken, String message) {
         super(success, message);
+        this.authToken = authToken;
     }
 }

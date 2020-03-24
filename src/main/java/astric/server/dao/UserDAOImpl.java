@@ -8,9 +8,7 @@ import astric.model.service.response.account.LoginResponse;
 import astric.model.service.response.account.LogoutResponse;
 import astric.model.service.response.account.SignUpResponse;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 
 public class UserDAOImpl implements UserDAO {
     private Map<String, String> usernamePasswordMap = new HashMap<String, String>() {{
@@ -18,12 +16,26 @@ public class UserDAOImpl implements UserDAO {
         put("jaredhasson", "password");
     }};
 
+    private List<String> usernames = Arrays.asList("username", "jaredhasson");
+
+    private List<String> handles = Arrays.asList("@user", "@jared");
+
     @Override
     public SignUpResponse signUp(SignUpRequest request) {
-        // TODO check username against existing database, if username doesn't exist,
-        // return success message, (milestone 4 - add user to database)
+        // TODO check username against existing database, if username/handle doesn't exist,
+        String username = request.getUsername();
+        String handle = request.getHandle();
 
-        return new SignUpResponse(true);
+
+        // return success message, (milestone 4 - add user to database)
+        if (usernames.contains(username)){
+            return new SignUpResponse(false, null, "Username already exists.");
+        } else if (handles.contains(handle)) {
+            return new SignUpResponse(false, null, "Handle already exists.");
+        } else {
+            String auth = "ae04c02a-bc73-4b58-984d-e5038c6f7c02";
+            return new SignUpResponse(true, auth);
+        }
     }
 
     @Override
@@ -31,12 +43,14 @@ public class UserDAOImpl implements UserDAO {
         String username = request.getUsername();
         String password = request.getPassword();
         String expectedPassword = usernamePasswordMap.get(username);
+        //check password TODO hashing
         if(expectedPassword != null && expectedPassword.equals(password)){
 //            String auth = UUID.randomUUID().toString();
+            // milestone 4 - set up auth token/session to expire
             String auth = "ae04c02a-bc73-4b58-984d-e5038c6f7c02";
             return new LoginResponse(true, auth);
         } else {
-            return new LoginResponse(false, "Incorrect Username/Password", null);
+            return new LoginResponse(false, "Your username or password is invalid.", null);
         }
     }
 
