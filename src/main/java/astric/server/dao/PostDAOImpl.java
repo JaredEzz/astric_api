@@ -5,12 +5,15 @@ import astric.model.domain.Post;
 import astric.model.domain.User;
 import astric.model.service.request.post.FeedRequest;
 import astric.model.service.request.post.MakePostRequest;
+import astric.model.service.request.post.StoryRequest;
 import astric.model.service.response.post.FeedResponse;
 import astric.model.service.response.post.MakePostResponse;
+import astric.model.service.response.post.StoryResponse;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class PostDAOImpl implements PostDAO {
     private List<Post> postList = new ArrayList<>();
@@ -66,6 +69,36 @@ public class PostDAOImpl implements PostDAO {
         }
 
         return new FeedResponse(responsePosts, hasMorePages);
+    }
+
+    @Override
+    public StoryResponse getStory(StoryRequest request) {
+        //check user, get all posts with that user as originating user
+        //paginated
+        assert request.getAuthToken().equals("ae04c02a-bc73-4b58-984d-e5038c6f7c02");
+        assert request.getLimit() > 0;
+        assert request.getUsername() != null;
+
+        List<Post> userPosts = hardCodedPosts.stream()
+                .filter(post -> post.getOriginatingUser().getUsername()
+                        .equals(request.getUsername()))
+                .collect(Collectors.toList());
+
+        List<Post> responsePosts = new ArrayList<>(request.getLimit());
+
+        boolean hasMorePages = false;
+
+        if (request.getLimit() > 0) {
+            int feedIndex = getFeedStartingIndex(request.getLastPost(), userPosts);
+
+            for (int limitCounter = 0; feedIndex < userPosts.size() && limitCounter < request.getLimit(); feedIndex++, limitCounter++) {
+                responsePosts.add(userPosts.get(feedIndex));
+            }
+
+            hasMorePages = feedIndex < userPosts.size();
+        }
+
+        return new StoryResponse(responsePosts, hasMorePages);
     }
 
     private int getFeedStartingIndex(Post lastPost, List<Post> allPosts){
