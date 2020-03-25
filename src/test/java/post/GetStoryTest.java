@@ -1,3 +1,5 @@
+package post;
+
 import astric.model.dao.PostDAO;
 import astric.model.service.request.post.StoryRequest;
 import astric.model.service.response.post.StoryResponse;

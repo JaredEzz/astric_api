@@ -7,11 +7,19 @@ import astric.model.service.response.follow.FollowResponse;
 import astric.model.service.response.follow.FollowersResponse;
 import astric.server.service.FollowServiceImpl;
 import com.amazonaws.services.lambda.runtime.Context;
+import com.amazonaws.services.lambda.runtime.RequestHandler;
 
-public class FollowHandler {
+import static astric.server.lambda.AuthenticationHandler.authenticateRequest;
+
+public class FollowHandler implements RequestHandler<FollowRequest, FollowResponse> {
 
     public FollowResponse handleRequest(FollowRequest request, Context context) {
         FollowService service = new FollowServiceImpl();
-        return service.doFollow(request);
+        authenticateRequest(request.getAuthToken());
+        try{
+            return service.doFollow(request);
+        } catch (Exception e) {
+            throw new RuntimeException("[ServerError] Something went wrong on our end. Please try again.");
+        }
     }
 }

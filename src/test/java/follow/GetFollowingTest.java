@@ -1,18 +1,19 @@
+package follow;
+
 import astric.model.dao.FollowingDAO;
-import astric.model.domain.User;
 import astric.model.service.request.follow.FollowingRequest;
 import astric.model.service.response.follow.FollowingResponse;
 import astric.server.dao.FollowingDAOImpl;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
-
 import static astric.server.dao.UserDAOImpl.hardCodedUsers;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
-class GetFollowersTest {
+class GetFollowingTest {
 
     @Test
-    void getFollowersTest(){
+    void getFollowingTest(){
         FollowingDAO followingDAO = new FollowingDAOImpl();
 
         int limitSize = 2;

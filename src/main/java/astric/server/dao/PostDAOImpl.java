@@ -70,7 +70,6 @@ public class PostDAOImpl implements PostDAO {
     public StoryResponse getStory(StoryRequest request) {
         //check user, get all posts with that user as originating user
         //paginated
-        assert request.getAuthToken().equals("ae04c02a-bc73-4b58-984d-e5038c6f7c02");
         assert request.getLimit() > 0;
         assert request.getUsername() != null;
 

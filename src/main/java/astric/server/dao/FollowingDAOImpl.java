@@ -25,7 +25,6 @@ public class FollowingDAOImpl implements FollowingDAO {
     public FollowingResponse getFollowing(FollowingRequest request) {
         assert request.getLimit() > 0;
         assert request.getFollowerUsername() != null;
-        assert request.getAuthToken().equals("ae04c02a-bc73-4b58-984d-e5038c6f7c02");
 
         if(followeesByFollower == null){
             followeesByFollower = initializeFollowees();
@@ -56,7 +55,6 @@ public class FollowingDAOImpl implements FollowingDAO {
     public FollowersResponse getFollowers(FollowersRequest request) {
         assert request.getLimit() > 0;
         assert request.getFolloweeUsername() != null;
-        assert request.getAuthToken().equals("ae04c02a-bc73-4b58-984d-e5038c6f7c02");
 
         if(followersByFollowee == null){
             followersByFollowee = initializeFollowers();
@@ -84,7 +82,6 @@ public class FollowingDAOImpl implements FollowingDAO {
 
     @Override
     public FollowResponse doFollow(FollowRequest request) {
-        assert request.getAuthToken().equals("ae04c02a-bc73-4b58-984d-e5038c6f7c02");
         assert request.getFolloweeUsername() != null;
         assert request.getFollowerUsername() != null;
 
@@ -121,7 +118,6 @@ public class FollowingDAOImpl implements FollowingDAO {
         String followerUsername = request.getFollowerUsername();
         String followeeUsername = request.getFolloweeUsername();
 
-        assert request.getAuthToken().equals("ae04c02a-bc73-4b58-984d-e5038c6f7c02");
         assert followeeUsername != null;
         assert followerUsername != null;
 

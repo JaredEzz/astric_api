@@ -1,3 +1,5 @@
+package follow;
+
 import astric.model.dao.FollowingDAO;
 import astric.model.service.request.follow.FollowRequest;
 import astric.model.service.response.follow.FollowResponse;
