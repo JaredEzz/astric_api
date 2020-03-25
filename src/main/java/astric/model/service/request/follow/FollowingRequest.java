@@ -4,8 +4,9 @@ import astric.model.domain.User;
 
 public class FollowingRequest {
     private int limit;
-    private User follower;
+    private String followerUsername;
     private User lastFollowee;
+    private String authToken;
 
     /**
      * Allows construction of the object from Json. Private so it won't be called in normal code.
@@ -15,16 +16,17 @@ public class FollowingRequest {
     /**
      * Creates an instance.
      *
-     * @param follower the {@link User} whose followees are to be returned.
+     * @param followerUsername the username of the User whose followees are to be returned.
      * @param limit the maximum number of followees to return.
      * @param lastFollowee the last followee that was returned in the previous request (null if
      *                     there was no previous request or if no followees were returned in the
      *                     previous request).
      */
-    public FollowingRequest(User follower, int limit, User lastFollowee) {
-        this.follower = follower;
+    public FollowingRequest(String followerUsername, int limit, User lastFollowee, String authToken) {
+        this.followerUsername = followerUsername;
         this.limit = limit;
         this.lastFollowee = lastFollowee;
+        this.authToken = authToken;
     }
 
 
@@ -33,17 +35,17 @@ public class FollowingRequest {
      *
      * @return the follower.
      */
-    public User getFollower() {
-        return follower;
+    public String getFollowerUsername() {
+        return followerUsername;
     }
 
     /**
      * Sets the follower.
      *
-     * @param follower the follower.
+     * @param followerUsername the follower's username.
      */
-    public void setFollower(User follower) {
-        this.follower = follower;
+    public void setFollowerUsername(String followerUsername) {
+        this.followerUsername = followerUsername;
     }
 
     /**
@@ -81,5 +83,13 @@ public class FollowingRequest {
      */
     public void setLastFollowee(User lastFollowee) {
         this.lastFollowee = lastFollowee;
+    }
+
+    public String getAuthToken() {
+        return authToken;
+    }
+
+    public void setAuthToken(String authToken) {
+        this.authToken = authToken;
     }
 }

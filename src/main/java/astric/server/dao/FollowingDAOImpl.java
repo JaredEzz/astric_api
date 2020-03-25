@@ -1,30 +1,30 @@
 package astric.server.dao;
 
 import astric.model.dao.FollowingDAO;
-import astric.model.domain.Follow;
 import astric.model.domain.User;
 import astric.model.service.request.follow.FollowingRequest;
 import astric.model.service.response.follow.FollowingResponse;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
+
+import static astric.server.dao.UserDAOImpl.hardCodedUsers;
+
 
 public class FollowingDAOImpl implements FollowingDAO {
 
-    private static Map<User, List<User>> followeesByFollower;
+    private static Map<String, List<User>> followeesByFollower;
 
     @Override
     public FollowingResponse getFollowing(FollowingRequest request) {
         assert request.getLimit() > 0;
-        assert request.getFollower() != null;
+        assert request.getFollowerUsername() != null;
+        assert request.getAuthToken().equals("ae04c02a-bc73-4b58-984d-e5038c6f7c02");
 
         if(followeesByFollower == null){
             followeesByFollower = initializeFollowees();
         }
 
-        List<User> allFollowees = followeesByFollower.get(request.getFollower());
+        List<User> allFollowees = followeesByFollower.get(request.getFollowerUsername());
         List<User> responseFollowees = new ArrayList<>(request.getLimit());
 
         boolean hasMorePages = false;
@@ -37,8 +37,7 @@ public class FollowingDAOImpl implements FollowingDAO {
                     responseFollowees.add(allFollowees.get(followeesIndex));
                 }
 
-                if (followeesIndex < allFollowees.size()) hasMorePages = true;
-                else hasMorePages = false;
+                hasMorePages = followeesIndex < allFollowees.size();
             }
         }
 
@@ -46,21 +45,51 @@ public class FollowingDAOImpl implements FollowingDAO {
 
     }
 
-    private Map<User, List<User>> initializeFollowees() {
-        Map<User, List<User>> followeesByFollower = new HashMap<>();
+    private Map<String, List<User>> initializeFollowees() {
+        Map<String, List<User>> followeesByFollower = new HashMap<>();
 
-        List<Follow> follows = getFollowGenerator().generateUsersAndFollows(100, 0, 50, FollowGenerator.Sort.FOLLOWER_FOLLOWEE);
-
-        for(Follow follow : follows) {
-            List<User> followees = followeesByFollower.get(follow.getFollower());
-
-            if (followees == null) {
-                followees = new ArrayList<>();
-                followeesByFollower.put(follow.getFollower(), followees);
-            }
-
-            followees.add(follow.getFollowee());
-        }
+        followeesByFollower.put(hardCodedUsers.get(0).getUsername(),
+                Arrays.asList(hardCodedUsers.get(1),
+                                hardCodedUsers.get(2),
+                                hardCodedUsers.get(3),
+                                hardCodedUsers.get(4),
+                                hardCodedUsers.get(5))
+        );
+        followeesByFollower.put(hardCodedUsers.get(1).getUsername(),
+                Arrays.asList(hardCodedUsers.get(0),
+                                hardCodedUsers.get(2),
+                                hardCodedUsers.get(3),
+                                hardCodedUsers.get(4),
+                                hardCodedUsers.get(5))
+        );
+        followeesByFollower.put(hardCodedUsers.get(2).getUsername(),
+                Arrays.asList(hardCodedUsers.get(0),
+                                hardCodedUsers.get(1),
+                                hardCodedUsers.get(3),
+                                hardCodedUsers.get(4),
+                                hardCodedUsers.get(5))
+        );
+        followeesByFollower.put(hardCodedUsers.get(3).getUsername(),
+                Arrays.asList(hardCodedUsers.get(0),
+                                hardCodedUsers.get(1),
+                                hardCodedUsers.get(2),
+                                hardCodedUsers.get(4),
+                                hardCodedUsers.get(5))
+        );
+        followeesByFollower.put(hardCodedUsers.get(4).getUsername(),
+                Arrays.asList(hardCodedUsers.get(0),
+                                hardCodedUsers.get(1),
+                                hardCodedUsers.get(3),
+                                hardCodedUsers.get(2),
+                                hardCodedUsers.get(5))
+        );
+        followeesByFollower.put(hardCodedUsers.get(5).getUsername(),
+                Arrays.asList(hardCodedUsers.get(0),
+                                hardCodedUsers.get(1),
+                                hardCodedUsers.get(3),
+                                hardCodedUsers.get(4),
+                                hardCodedUsers.get(2))
+        );
 
         return followeesByFollower;
     }

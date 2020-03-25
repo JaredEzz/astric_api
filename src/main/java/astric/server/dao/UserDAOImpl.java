@@ -1,6 +1,7 @@
 package astric.server.dao;
 
 import astric.model.dao.UserDAO;
+import astric.model.domain.User;
 import astric.model.service.request.account.LoginRequest;
 import astric.model.service.request.account.LogoutRequest;
 import astric.model.service.request.account.SignUpRequest;
@@ -15,6 +16,15 @@ public class UserDAOImpl implements UserDAO {
         put("username", "password");
         put("jaredhasson", "password");
     }};
+
+    public static List<User> hardCodedUsers = Arrays.asList(
+            new User("Jared", "Hasson", "@jaredezz", "assets/images/astric.png", "jaredhasson"),
+            new User("Thomas", "Banks", "@tb", "assets/images/man_profile.png", "tbanks"),
+            new User("Wendy", "Watts", "@wwatts", "assets/images/woman_profile.png", "wendyw"),
+            new User("Orville", "Klaus", "@santa", "assets/images/santa.png", "ovk"),
+            new User("Manny", "Woodpecker", "@birdlover", "assets/images/woodpecker.jpg", "mannywp"),
+            new User("Fanny", "Follower", "@ff", "assets/images/fanny_pack.jpeg", "follo"));
+
 
     private List<String> usernames = Arrays.asList("username", "jaredhasson");
 
