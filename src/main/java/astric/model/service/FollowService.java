@@ -1,6 +1,8 @@
 package astric.model.service;
 
+import astric.model.service.request.follow.FollowersRequest;
 import astric.model.service.request.follow.FollowingRequest;
+import astric.model.service.response.follow.FollowersResponse;
 import astric.model.service.response.follow.FollowingResponse;
 
 /**
@@ -16,4 +18,6 @@ public interface FollowService {
      * @return the followees.
      */
     FollowingResponse getFollowing(FollowingRequest request);
+
+    FollowersResponse getFollowers(FollowersRequest request);
 }
