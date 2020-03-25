@@ -5,9 +5,11 @@ import astric.model.domain.User;
 import astric.model.service.request.follow.FollowRequest;
 import astric.model.service.request.follow.FollowersRequest;
 import astric.model.service.request.follow.FollowingRequest;
+import astric.model.service.request.follow.IsFollowingRequest;
 import astric.model.service.response.follow.FollowResponse;
 import astric.model.service.response.follow.FollowersResponse;
 import astric.model.service.response.follow.FollowingResponse;
+import astric.model.service.response.follow.IsFollowingResponse;
 
 import java.util.*;
 
@@ -111,6 +113,29 @@ public class FollowingDAOImpl implements FollowingDAO {
         }
 
         return new FollowResponse(true);
+    }
+
+    @Override
+    public IsFollowingResponse isFollowing(IsFollowingRequest request) {
+
+        String followerUsername = request.getFollowerUsername();
+        String followeeUsername = request.getFolloweeUsername();
+
+        assert request.getAuthToken().equals("ae04c02a-bc73-4b58-984d-e5038c6f7c02");
+        assert followeeUsername != null;
+        assert followerUsername != null;
+
+        if(followersByFollowee == null){
+            followersByFollowee = initializeFollowers();
+        }
+
+        List<User> followers = followersByFollowee.get(followeeUsername); //TODO handle not found
+        for (User u : followers) {
+            if (u.getUsername().equals(followerUsername)) {
+                return new IsFollowingResponse(true, true, String.format("%s is following %s", followerUsername, followeeUsername));
+            }
+        }
+        return new IsFollowingResponse(true, false, String.format("%s is not following %s", followerUsername, followeeUsername));
     }
 
     private Map<String, List<User>> initializeFollowees() {
