@@ -2,8 +2,10 @@ package astric.server.dao;
 
 import astric.model.dao.FollowingDAO;
 import astric.model.domain.User;
+import astric.model.service.request.follow.FollowRequest;
 import astric.model.service.request.follow.FollowersRequest;
 import astric.model.service.request.follow.FollowingRequest;
+import astric.model.service.response.follow.FollowResponse;
 import astric.model.service.response.follow.FollowersResponse;
 import astric.model.service.response.follow.FollowingResponse;
 
@@ -76,6 +78,39 @@ public class FollowingDAOImpl implements FollowingDAO {
         }
 
         return new FollowersResponse(responseFollowers, hasMorePages);
+    }
+
+    @Override
+    public FollowResponse doFollow(FollowRequest request) {
+        assert request.getAuthToken().equals("ae04c02a-bc73-4b58-984d-e5038c6f7c02");
+        assert request.getFolloweeUsername() != null;
+        assert request.getFollowerUsername() != null;
+
+        if(followersByFollowee == null){
+            followersByFollowee = initializeFollowers();
+        }
+
+        List<User> followers = new ArrayList<>(followersByFollowee.get(request.getFolloweeUsername()));
+        if (request.isFollow()) {
+            //follow
+            User newFollower = new UserDAOImpl().findUser(request.getFollowerUsername());
+            followers.add(newFollower);
+            followersByFollowee.replace(request.getFolloweeUsername(), followers);
+        } else {
+            //unfollow
+            User followerToRemove = new UserDAOImpl().findUser(request.getFollowerUsername());
+            followers.remove(followerToRemove);
+
+            List<User> updatedFollowers = new ArrayList<>();
+            for (User u : followers) {
+                if (!u.getUsername().equals(followerToRemove.getUsername())) {
+                    updatedFollowers.add(u);
+                }
+            }
+            followersByFollowee.replace(request.getFolloweeUsername(), updatedFollowers);
+        }
+
+        return new FollowResponse(true);
     }
 
     private Map<String, List<User>> initializeFollowees() {

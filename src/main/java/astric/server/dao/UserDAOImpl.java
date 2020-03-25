@@ -69,4 +69,13 @@ public class UserDAOImpl implements UserDAO {
         // (milestone 4 - invalidate authToken)
         return new LogoutResponse(true);
     }
+
+    public User findUser(String username){
+        for (User u : hardCodedUsers) {
+            if (u.getUsername().equals(username)) {
+                return u;
+            }
+        }
+        return null;
+    }
 }

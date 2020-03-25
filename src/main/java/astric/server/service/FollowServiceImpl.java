@@ -1,8 +1,10 @@
 package astric.server.service;
 
 import astric.model.service.FollowService;
+import astric.model.service.request.follow.FollowRequest;
 import astric.model.service.request.follow.FollowersRequest;
 import astric.model.service.request.follow.FollowingRequest;
+import astric.model.service.response.follow.FollowResponse;
 import astric.model.service.response.follow.FollowersResponse;
 import astric.model.service.response.follow.FollowingResponse;
 import astric.model.dao.FollowingDAO;
@@ -20,5 +22,11 @@ public class FollowServiceImpl implements FollowService {
     public FollowersResponse getFollowers(FollowersRequest request) {
         FollowingDAO dao = new FollowingDAOImpl();
         return dao.getFollowers(request);
+    }
+
+    @Override
+    public FollowResponse doFollow(FollowRequest request) {
+        FollowingDAO dao = new FollowingDAOImpl();
+        return dao.doFollow(request);
     }
 }
