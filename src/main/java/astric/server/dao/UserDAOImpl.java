@@ -1,6 +1,6 @@
 package astric.server.dao;
 
-import astric.HashUtil;
+import astric.server.lambda.account.HashUtil;
 import astric.model.dao.UserDAO;
 import astric.model.domain.User;
 import astric.model.service.request.account.LoginRequest;
@@ -12,19 +12,19 @@ import astric.model.service.response.account.SignUpResponse;
 import com.amazonaws.regions.Regions;
 import com.amazonaws.services.dynamodbv2.AmazonDynamoDB;
 import com.amazonaws.services.dynamodbv2.AmazonDynamoDBClientBuilder;
-import com.amazonaws.services.dynamodbv2.document.DynamoDB;
-import com.amazonaws.services.dynamodbv2.document.Item;
-import com.amazonaws.services.dynamodbv2.document.PutItemOutcome;
-import com.amazonaws.services.dynamodbv2.document.Table;
+import com.amazonaws.services.dynamodbv2.document.*;
+import com.amazonaws.services.dynamodbv2.document.spec.GetItemSpec;
+import com.amazonaws.services.dynamodbv2.document.spec.QuerySpec;
+import com.amazonaws.services.dynamodbv2.document.utils.NameMap;
+import com.amazonaws.services.dynamodbv2.document.utils.ValueMap;
 
-import javax.management.DynamicMBean;
 import java.util.*;
 
 public class UserDAOImpl implements UserDAO {
-    private Map<String, String> usernamePasswordMap = new HashMap<String, String>() {{
-        put("username", "password");
-        put("jaredhasson", "password");
-    }};
+
+    AmazonDynamoDB client;
+    DynamoDB dynamoDB;
+    Table table;
 
     public static List<User> hardCodedUsers = Arrays.asList(
             new User("Jared", "Hasson", "@jaredezz", "assets/images/astric.png", "jaredhasson"),
@@ -39,6 +39,17 @@ public class UserDAOImpl implements UserDAO {
 
     private List<String> handles = Arrays.asList("@user", "@jared");
 
+    private Map<String, String> usernamePasswordMap = new HashMap<String, String>() {{
+        put("username", "password");
+        put("jaredhasson", "password");
+    }};
+
+    public UserDAOImpl() {
+        this.client = AmazonDynamoDBClientBuilder.standard().withRegion(Regions.US_WEST_2).build();
+        this.dynamoDB = new DynamoDB(client);
+        this.table = dynamoDB.getTable("Users");
+    }
+
     @Override
     public SignUpResponse signUp(SignUpRequest request) {
         // TODO check username against existing database, if username/handle doesn't exist,
@@ -47,7 +58,7 @@ public class UserDAOImpl implements UserDAO {
 
 
         // return success message, (milestone 4 - add user to database)
-        if (usernames.contains(username)){
+        if (usernames.contains(username)) {
             //username exists in user db
             return new SignUpResponse(false, null, "Username already exists.");
         } else if (handles.contains(handle)) {
@@ -77,7 +88,7 @@ public class UserDAOImpl implements UserDAO {
         String password = request.getPassword();
         String expectedPassword = usernamePasswordMap.get(username);
         //check password TODO hashing
-        if(expectedPassword != null && expectedPassword.equals(password)){
+        if (expectedPassword != null && expectedPassword.equals(password)) {
 //            String auth = UUID.randomUUID().toString();
             // milestone 4 - set up auth token/session to expire
             String auth = "ae04c02a-bc73-4b58-984d-e5038c6f7c02";
@@ -93,7 +104,7 @@ public class UserDAOImpl implements UserDAO {
         return new LogoutResponse(true);
     }
 
-    public User findUser(String username){
+    public User findUser(String username) {
         for (User u : hardCodedUsers) {
             if (u.getUsername().equals(username)) {
                 return u;
@@ -102,29 +113,58 @@ public class UserDAOImpl implements UserDAO {
         return null;
     }
 
-    public void writeToUserTable(User user, String passwordHash){
+
+    public void writeToUserTable(User user, String passwordHash) {
         String username = user.getUsername();
-        String fullName = user.getFirstName() + " " + user.getLastName();
-
-        AmazonDynamoDB client = AmazonDynamoDBClientBuilder.standard().withRegion(Regions.US_WEST_2).build();
-
-        DynamoDB dynamoDB = new DynamoDB(client);
-
-        Table table = dynamoDB.getTable("Users");
-
-        final Map<String, Object> userMap = new HashMap<>();
-
-        userMap.put("passwordHash", passwordHash);
+        String handle = user.getAlias();
 
         try {
             System.out.println("Adding a new user...");
             PutItemOutcome outcome = table
-                    .putItem(new Item().withPrimaryKey("username", username, "fullName", fullName).withMap("user", userMap));
+                    .putItem(
+                            new Item()
+                                    .withPrimaryKey("username", username)
+                            .withPrimaryKey("handle", handle)
+                            .withString("passwordHash", passwordHash)
+                            .withString("firstName", user.getFirstName())
+                            .withString("lastName", user.getLastName())
+                            .withString("imageURL", user.getImageUrl())
+                                    );
 
             System.out.println("PutItem succeeded:\n" + outcome.getPutItemResult());
         } catch (Exception e) {
-            System.err.println("Unable to add user: " + username + ": " + fullName);
+            System.err.println("Unable to add user: " + username);
             System.err.println(e.getMessage());
         }
+    }
+
+    public boolean userExistsWithUsername(String username) {
+        Item item =  null;
+        try{
+            item = table.getItem("username", username);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return item != null;
+    }
+
+    public boolean userExistsWithHandle(String handle) {
+        Index index = table.getIndex("handle-index");
+
+        QuerySpec spec = new QuerySpec()
+                .withKeyConditionExpression("#h = :v_handle")
+                .withNameMap(new NameMap()
+                        .with("#h", "handle"))
+                .withValueMap(new ValueMap()
+                        .withString(":v_handle", handle));
+
+        ItemCollection<QueryOutcome> items = index.query(spec);
+        Iterator<Item> iterator = items.iterator();
+
+        List<Object> results = new ArrayList<>();
+        while (iterator.hasNext()) {
+            results.add(iterator.next());
+        }
+        return !results.isEmpty();
     }
 }

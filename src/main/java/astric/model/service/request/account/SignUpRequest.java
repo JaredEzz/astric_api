@@ -9,7 +9,7 @@ public class SignUpRequest {
     private String username;
     private String password;
     private String handle;
-//    private Image image; milestone 4?
+    private String image;
 
     /**
      * Allows construction of the object from Json. Private so it won't be called in normal code.
@@ -20,11 +20,12 @@ public class SignUpRequest {
      * Creates an instance.
      *
      */
-    public SignUpRequest(String name, String username, String password, String handle) {
+    public SignUpRequest(String name, String username, String password, String handle, String image) {
         this.name = name;
         this.username = username;
         this.password = password;
         this.handle = handle;
+        this.image = image;
     }
 
     public String getName() {
@@ -57,5 +58,13 @@ public class SignUpRequest {
 
     public void setHandle(String handle) {
         this.handle = handle;
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
     }
 }

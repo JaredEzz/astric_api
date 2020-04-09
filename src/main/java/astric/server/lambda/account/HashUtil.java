@@ -1,4 +1,4 @@
-package astric;
+package astric.server.lambda.account;
 
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
