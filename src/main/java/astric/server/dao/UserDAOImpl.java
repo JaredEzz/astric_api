@@ -17,7 +17,15 @@ import com.amazonaws.services.dynamodbv2.document.*;
 import com.amazonaws.services.dynamodbv2.document.spec.QuerySpec;
 import com.amazonaws.services.dynamodbv2.document.utils.NameMap;
 import com.amazonaws.services.dynamodbv2.document.utils.ValueMap;
+import com.amazonaws.services.s3.AmazonS3;
+import com.amazonaws.services.s3.AmazonS3Client;
+import com.amazonaws.services.s3.AmazonS3ClientBuilder;
+import com.amazonaws.services.s3.model.CannedAccessControlList;
+import com.amazonaws.services.s3.model.PutObjectRequest;
+import com.amazonaws.services.s3.model.PutObjectResult;
 
+import java.io.File;
+import java.net.URL;
 import java.util.*;
 
 public class UserDAOImpl implements UserDAO {
@@ -68,16 +76,35 @@ public class UserDAOImpl implements UserDAO {
             //hash password
             String hashedPassword = HashUtil.hashPassword(request.getPassword());
 
+            //upload image to S3
+            String imageUrl = uploadProfileImage(username, request.getImage());
+
             //add sign up action to auth table
             String authToken = authDAO.signUp(username);
 
             //add user to user table
-            User userToAdd = new User(request.getName(), handle, "S3Url", username);
+            User userToAdd = new User(request.getName(), handle, imageUrl, username);
             writeToUserTable(userToAdd, hashedPassword);
 
             //return auth token
             return new SignUpResponse(true, authToken);
         }
+    }
+
+    public String uploadProfileImage(String username, String image) {
+        AmazonS3 s3 = AmazonS3ClientBuilder
+                .standard()
+                .withRegion(Regions.US_EAST_1)
+                .build();
+        String fileName = "/Users/jaredhasson/Desktop/astric_api/src/exampleProfile.png";
+        String uploadFilePath = "profiles/"+username;
+        String bucketname = "hasson340";
+        s3.putObject(bucketname, uploadFilePath, new File(fileName));
+
+        URL result = null;
+            result = s3.getUrl(bucketname, uploadFilePath);
+        System.out.println(result.toString());
+        return result.toString();
     }
 
     @Override

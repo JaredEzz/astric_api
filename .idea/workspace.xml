@@ -2,17 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="dd1263c4-294a-4e0e-8a6e-b617f72e087d" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/src/exampleProfile.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/astric/server/dao/AuthDAOImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/astric/server/dao/AuthDAOImpl.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/astric/server/dao/UserDAOImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/astric/server/dao/UserDAOImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/astric/server/lambda/AuthenticationHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/astric/server/lambda/AuthenticationHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/account/AuthDAOImplTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/account/AuthDAOImplTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/account/HashUtilTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/account/HashUtilTest.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/test/java/account/UserDAOImplTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/account/UserDAOImplTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/maven-archiver/pom.properties" beforeDir="false" afterPath="$PROJECT_DIR$/target/maven-archiver/pom.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/testCompile/default-testCompile/inputFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/testCompile/default-testCompile/inputFiles.lst" afterDir="false" />
     </list>
     <list id="f8d2ea07-50dd-42cb-9b15-2ba3062013f3" name="Other" comment="">
       <change beforePath="$PROJECT_DIR$/out/artifacts/astric_api_jar/astric_api.jar" beforeDir="false" afterPath="$PROJECT_DIR$/out/artifacts/astric_api_jar/astric_api.jar" afterDir="false" />
@@ -77,6 +70,9 @@
     <property name="show.migrate.to.gradle.popup" value="false" />
   </component>
   <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src" />
+    </key>
     <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
       <recent name="astric.model" />
     </key>
@@ -93,7 +89,7 @@
       <recent name="astric.server.service" />
     </key>
   </component>
-  <component name="RunManager" selected="JUnit.UserDAOImplTest.testLogout">
+  <component name="RunManager" selected="JUnit.UserDAOImplTest.testUploadS3">
     <configuration name="AuthDAOImplTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="astric_api" />
       <extension name="coverage">
@@ -141,21 +137,6 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="UserDAOImplTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="astric_api" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="account.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="account" />
-      <option name="MAIN_CLASS_NAME" value="account.UserDAOImplTest" />
-      <option name="TEST_OBJECT" value="class" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
     <configuration name="UserDAOImplTest.testLogout" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="astric_api" />
       <extension name="coverage">
@@ -172,13 +153,29 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="UserDAOImplTest.testUploadS3" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="astric_api" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="account.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="account" />
+      <option name="MAIN_CLASS_NAME" value="account.UserDAOImplTest" />
+      <option name="METHOD_NAME" value="testUploadS3" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="JUnit.UserDAOImplTest.testUploadS3" />
         <item itemvalue="JUnit.UserDAOImplTest.testLogout" />
         <item itemvalue="JUnit.AuthDAOImplTest.testSessionIsValid" />
         <item itemvalue="JUnit.HashUtilTest.testHash" />
         <item itemvalue="JUnit.AuthDAOImplTest" />
-        <item itemvalue="JUnit.UserDAOImplTest" />
       </list>
     </recent_temporary>
   </component>
@@ -194,7 +191,7 @@
       <workItem from="1586272701514" duration="3743000" />
       <workItem from="1586285001401" duration="650000" />
       <workItem from="1586442306585" duration="9608000" />
-      <workItem from="1586458106327" duration="8660000" />
+      <workItem from="1586458106327" duration="11459000" />
     </task>
     <task id="LOCAL-00001" summary="add auth token to loginResponse">
       <created>1585060621785</created>
@@ -308,7 +305,21 @@
       <option name="project" value="LOCAL" />
       <updated>1586535274466</updated>
     </task>
-    <option name="localTasksCounter" value="17" />
+    <task id="LOCAL-00017" summary="implemented log out">
+      <created>1586540458123</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1586540458123</updated>
+    </task>
+    <task id="LOCAL-00018" summary="implemented log out">
+      <created>1586540483699</created>
+      <option name="number" value="00018" />
+      <option name="presentableId" value="LOCAL-00018" />
+      <option name="project" value="LOCAL" />
+      <updated>1586540483699</updated>
+    </task>
+    <option name="localTasksCounter" value="19" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -331,7 +342,8 @@
     <MESSAGE value="query user table with username or handle" />
     <MESSAGE value="new hashing algorithm and validation" />
     <MESSAGE value="implemented login" />
-    <option name="LAST_COMMIT_MESSAGE" value="implemented login" />
+    <MESSAGE value="implemented log out" />
+    <option name="LAST_COMMIT_MESSAGE" value="implemented log out" />
   </component>
   <component name="WindowStateProjectService">
     <state x="560" y="217" key="#Auto_Import" timestamp="1586536637279">
@@ -358,26 +370,26 @@
       <screen x="0" y="23" width="1920" height="1057" />
     </state>
     <state x="690" y="405" key="ANALYSIS_DLG_com.intellij.analysis.BaseAnalysisAction$1/1920.-575.1080.1897/-1680.23.1680.1027/0.23.1920.1057@0.23.1920.1057" timestamp="1586453317190" />
-    <state x="571" y="154" key="CommitChangelistDialog2" timestamp="1586540457897">
+    <state x="571" y="154" key="CommitChangelistDialog2" timestamp="1586540483567">
       <screen x="0" y="23" width="1920" height="1057" />
     </state>
-    <state x="571" y="154" key="CommitChangelistDialog2/1920.-575.1080.1897/-1680.23.1680.1027/0.23.1920.1057@0.23.1920.1057" timestamp="1586540457897" />
-    <state width="1878" height="363" key="GridCell.Tab.0.bottom" timestamp="1586540250638">
+    <state x="571" y="154" key="CommitChangelistDialog2/1920.-575.1080.1897/-1680.23.1680.1027/0.23.1920.1057@0.23.1920.1057" timestamp="1586540483567" />
+    <state width="1878" height="357" key="GridCell.Tab.0.bottom" timestamp="1586542634893">
       <screen x="0" y="23" width="1920" height="1057" />
     </state>
-    <state width="1878" height="363" key="GridCell.Tab.0.bottom/1920.-575.1080.1897/-1680.23.1680.1027/0.23.1920.1057@0.23.1920.1057" timestamp="1586540250638" />
-    <state width="1878" height="363" key="GridCell.Tab.0.center" timestamp="1586540250636">
+    <state width="1878" height="357" key="GridCell.Tab.0.bottom/1920.-575.1080.1897/-1680.23.1680.1027/0.23.1920.1057@0.23.1920.1057" timestamp="1586542634893" />
+    <state width="1878" height="357" key="GridCell.Tab.0.center" timestamp="1586542634892">
       <screen x="0" y="23" width="1920" height="1057" />
     </state>
-    <state width="1878" height="363" key="GridCell.Tab.0.center/1920.-575.1080.1897/-1680.23.1680.1027/0.23.1920.1057@0.23.1920.1057" timestamp="1586540250636" />
-    <state width="1878" height="363" key="GridCell.Tab.0.left" timestamp="1586540250635">
+    <state width="1878" height="357" key="GridCell.Tab.0.center/1920.-575.1080.1897/-1680.23.1680.1027/0.23.1920.1057@0.23.1920.1057" timestamp="1586542634892" />
+    <state width="1878" height="357" key="GridCell.Tab.0.left" timestamp="1586542634891">
       <screen x="0" y="23" width="1920" height="1057" />
     </state>
-    <state width="1878" height="363" key="GridCell.Tab.0.left/1920.-575.1080.1897/-1680.23.1680.1027/0.23.1920.1057@0.23.1920.1057" timestamp="1586540250635" />
-    <state width="1878" height="363" key="GridCell.Tab.0.right" timestamp="1586540250637">
+    <state width="1878" height="357" key="GridCell.Tab.0.left/1920.-575.1080.1897/-1680.23.1680.1027/0.23.1920.1057@0.23.1920.1057" timestamp="1586542634891" />
+    <state width="1878" height="357" key="GridCell.Tab.0.right" timestamp="1586542634948">
       <screen x="0" y="23" width="1920" height="1057" />
     </state>
-    <state width="1878" height="363" key="GridCell.Tab.0.right/1920.-575.1080.1897/-1680.23.1680.1027/0.23.1920.1057@0.23.1920.1057" timestamp="1586540250637" />
+    <state width="1878" height="357" key="GridCell.Tab.0.right/1920.-575.1080.1897/-1680.23.1680.1027/0.23.1920.1057@0.23.1920.1057" timestamp="1586542634948" />
     <state x="448" y="133" key="SettingsEditor" timestamp="1586450440487">
       <screen x="0" y="23" width="1920" height="1057" />
     </state>
@@ -386,10 +398,10 @@
       <screen x="0" y="23" width="1920" height="1057" />
     </state>
     <state x="798" y="428" key="VCS.EditChangelistDialog/1920.-575.1080.1897/-1680.23.1680.1027/0.23.1920.1057@0.23.1920.1057" timestamp="1586443377793" />
-    <state x="560" y="291" key="Vcs.Push.Dialog.v2" timestamp="1586540459937">
+    <state x="560" y="291" key="Vcs.Push.Dialog.v2" timestamp="1586540484879">
       <screen x="0" y="23" width="1920" height="1057" />
     </state>
-    <state x="560" y="291" key="Vcs.Push.Dialog.v2/1920.-575.1080.1897/-1680.23.1680.1027/0.23.1920.1057@0.23.1920.1057" timestamp="1586540459937" />
+    <state x="560" y="291" key="Vcs.Push.Dialog.v2/1920.-575.1080.1897/-1680.23.1680.1027/0.23.1920.1057@0.23.1920.1057" timestamp="1586540484879" />
     <state x="765" y="475" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1586539054960">
       <screen x="0" y="23" width="1920" height="1057" />
     </state>
@@ -433,6 +445,11 @@
           <url>file://$PROJECT_DIR$/src/main/java/astric/server/dao/AuthDAOImpl.java</url>
           <line>101</line>
           <option name="timeStamp" value="18" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/astric/server/dao/UserDAOImpl.java</url>
+          <line>109</line>
+          <option name="timeStamp" value="22" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

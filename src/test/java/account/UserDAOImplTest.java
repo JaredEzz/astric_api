@@ -12,12 +12,17 @@ import java.util.Random;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class UserDAOImplTest {
-//    UserDAOImpl userDAO;
-//
-//    @BeforeEach
-//    void setUp() {
-//        userDAO = new UserDAOImpl();
-//    }
+    UserDAOImpl userDAO;
+
+    @BeforeEach
+    void setUp() {
+        userDAO = new UserDAOImpl();
+    }
+
+    @Test
+    void testUploadS3(){
+        userDAO.uploadProfileImage("jaredhasson1215","image");
+    }
 
     //
 //    @Test
