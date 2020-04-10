@@ -40,6 +40,8 @@
 /Users/jaredhasson/Desktop/astric_api/src/main/java/astric/model/service/request/follow/FollowersRequest.java
 /Users/jaredhasson/Desktop/astric_api/src/main/java/astric/server/service/PostServiceImpl.java
 /Users/jaredhasson/Desktop/astric_api/src/main/java/astric/model/service/response/PagedResponse.java
+/Users/jaredhasson/Desktop/astric_api/src/main/java/astric/server/dao/AuthDAOImpl.java
+/Users/jaredhasson/Desktop/astric_api/src/main/java/astric/model/dao/AuthDAO.java
 /Users/jaredhasson/Desktop/astric_api/src/main/java/astric/model/dao/PostDAO.java
 /Users/jaredhasson/Desktop/astric_api/src/main/java/astric/model/service/response/account/LoginResponse.java
 /Users/jaredhasson/Desktop/astric_api/src/main/java/astric/server/dao/FollowingDAOImpl.java

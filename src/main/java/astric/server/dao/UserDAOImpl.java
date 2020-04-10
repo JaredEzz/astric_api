@@ -100,8 +100,11 @@ public class UserDAOImpl implements UserDAO {
 
     @Override
     public LogoutResponse logout(LogoutRequest request) {
-        // (milestone 4 - invalidate authToken)
-        return new LogoutResponse(true);
+        LogoutResponse response = authDAO.sessionIsValid(request.getAuthToken()) ?
+                new LogoutResponse(true) :
+                new LogoutResponse(true, "Your session has timed out. You were logged out automatically.");
+        authDAO.logout(request.getAuthToken(), request.getUsername());
+        return response;
     }
 
     public User findUser(String username) {

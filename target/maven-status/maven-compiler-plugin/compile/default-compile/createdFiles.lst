@@ -15,6 +15,7 @@ astric/server/service/FollowServiceImpl.class
 astric/server/lambda/account/SignUpHandler.class
 astric/model/service/response/follow/FollowingResponse.class
 astric/server/dao/PostDAOImpl.class
+astric/server/dao/AuthDAOImpl.class
 astric/model/service/request/account/LoginRequest.class
 astric/model/service/request/post/MakePostRequest.class
 astric/server/lambda/AuthenticationHandler.class
@@ -26,7 +27,9 @@ astric/model/service/response/post/MakePostResponse.class
 astric/model/service/response/account/SignUpResponse.class
 astric/model/service/response/Response.class
 astric/model/service/request/follow/FollowRequest.class
+astric/model/dao/AuthDAO.class
 astric/server/lambda/follow/GetFollowingHandler.class
+astric/server/dao/AuthDAOImpl$Action.class
 astric/server/service/PostServiceImpl.class
 astric/model/dao/PostDAO.class
 astric/model/dao/UserDAO.class

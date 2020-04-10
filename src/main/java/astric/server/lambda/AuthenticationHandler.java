@@ -1,10 +1,14 @@
 package astric.server.lambda;
 
+import astric.server.dao.AuthDAOImpl;
+
 public class AuthenticationHandler {
 
+    public static AuthDAOImpl authDAO;
+
     public static void authenticateRequest(String authToken) throws RuntimeException {
-        if (!authToken.equals("ae04c02a-bc73-4b58-984d-e5038c6f7c02")) {
-            throw new RuntimeException("[RequestError] Invalid auth token");
+        if (!new AuthDAOImpl().sessionIsValid(authToken)) {
+            throw new RuntimeException("[RequestError] Invalid auth token, your session may have expired. Please login again.");
         }
     }
 }
