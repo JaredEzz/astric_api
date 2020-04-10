@@ -1,7 +1,6 @@
 package astric.model.service.request.post;
 
 import astric.model.domain.Post;
-import astric.model.domain.User;
 
 public class FeedRequest {
     private int limit;

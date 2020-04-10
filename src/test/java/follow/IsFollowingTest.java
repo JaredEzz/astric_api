@@ -1,9 +1,7 @@
 package follow;
 
 import astric.model.dao.FollowingDAO;
-import astric.model.service.request.follow.FollowRequest;
 import astric.model.service.request.follow.IsFollowingRequest;
-import astric.model.service.response.follow.FollowResponse;
 import astric.model.service.response.follow.IsFollowingResponse;
 import astric.server.dao.FollowingDAOImpl;
 import org.junit.jupiter.api.Test;

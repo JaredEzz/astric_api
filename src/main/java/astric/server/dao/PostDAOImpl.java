@@ -2,7 +2,6 @@ package astric.server.dao;
 
 import astric.model.dao.PostDAO;
 import astric.model.domain.Post;
-import astric.model.domain.User;
 import astric.model.service.request.post.FeedRequest;
 import astric.model.service.request.post.MakePostRequest;
 import astric.model.service.request.post.StoryRequest;

@@ -7,41 +7,27 @@ import java.util.Objects;
  */
 public class User implements Comparable<User> {
 
-    private String firstName;
-    private String lastName;
+    private String username;
+    private String name;
     private String alias;
     private String imageUrl;
 
-    public User(String firstName, String lastName, String alias, String imageUrl, String username) {
-        this.firstName = firstName;
-        this.lastName = lastName;
+    public User(String name, String alias, String imageUrl, String username) {
+        this.name = name;
         this.alias = alias;
         this.imageUrl = imageUrl;
         this.username = username;
     }
 
-    private String username;
-
-    private User() {}
-
-    public String getFirstName() {
-        return firstName;
-    }
-
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
-    public String getLastName() {
-        return lastName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
+    private User() {
     }
 
     public String getName() {
-        return String.format("%s %s", firstName, lastName);
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getAlias() {
@@ -79,16 +65,6 @@ public class User implements Comparable<User> {
     @Override
     public int hashCode() {
         return Objects.hash(alias);
-    }
-
-    @Override
-    public String toString() {
-        return "User{" +
-                "firstName='" + firstName + '\'' +
-                ", lastName='" + lastName + '\'' +
-                ", alias='" + alias + '\'' +
-                ", imageUrl='" + imageUrl + '\'' +
-                '}';
     }
 
     @Override

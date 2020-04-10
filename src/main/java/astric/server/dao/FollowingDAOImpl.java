@@ -260,16 +260,5 @@ public class FollowingDAOImpl implements FollowingDAO {
 
         return followeesIndex;
     }
-
-    /**
-     * Returns an instance of FollowGenerator that can be used to generate Follow data. This is
-     * written as a separate method to allow mocking of the generator.
-     *
-     * @return the generator.
-     */
-    FollowGenerator getFollowGenerator() {
-        return FollowGenerator.getInstance();
-    }
-
 }
 

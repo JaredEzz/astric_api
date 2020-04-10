@@ -1,18 +1,47 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="dd1263c4-294a-4e0e-8a6e-b617f72e087d" name="Default Changelist" comment="hashing and user table beginner code">
+    <list default="true" id="dd1263c4-294a-4e0e-8a6e-b617f72e087d" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/src/main/java/astric/model/dao/AuthDAO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/astric/server/dao/AuthDAOImpl.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/java/account/AuthDAOImplTest.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/astric/HashUtil.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/astric/server/lambda/account/HashUtil.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/astric/model/domain/Post.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/astric/model/domain/Post.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/astric/model/domain/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/astric/model/domain/User.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/astric/model/service/request/account/SignUpRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/astric/model/service/request/account/SignUpRequest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/astric/model/service/request/post/FeedRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/astric/model/service/request/post/FeedRequest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/astric/model/service/response/follow/FollowersResponse.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/astric/model/service/response/follow/FollowersResponse.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/astric/server/dao/FollowGenerator.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/astric/server/dao/FollowingDAOImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/astric/server/dao/FollowingDAOImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/astric/server/dao/PostDAOImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/astric/server/dao/PostDAOImpl.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/astric/server/dao/UserDAOImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/astric/server/dao/UserDAOImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/astric/server/dao/UserGenerator.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/astric/server/lambda/account/HashUtil.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/astric/server/lambda/account/HashUtil.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/astric/server/lambda/follow/FollowHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/astric/server/lambda/follow/FollowHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/astric/server/lambda/follow/GetFollowersHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/astric/server/lambda/follow/GetFollowersHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/astric/server/lambda/follow/IsFollowingHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/astric/server/lambda/follow/IsFollowingHandler.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/test/java/account/HashUtilTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/account/HashUtilTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/account/LogoutTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/account/LogoutTest.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/test/java/account/SignUpTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/account/SignUpTest.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/test/java/account/UserDAOImplTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/account/UserDAOImplTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/follow/FollowTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/follow/FollowTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/follow/IsFollowingTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/follow/IsFollowingTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/astric_api-1.0-SNAPSHOT.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/astric/model/domain/User.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/astric/model/domain/User.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/astric/server/dao/FollowGenerator$1.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/astric/server/dao/FollowGenerator$Sort.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/astric/server/dao/FollowGenerator.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/astric/server/dao/UserGenerator$Names.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/astric/server/dao/UserGenerator.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/maven-archiver/pom.properties" beforeDir="false" afterPath="$PROJECT_DIR$/target/maven-archiver/pom.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/testCompile/default-testCompile/inputFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/testCompile/default-testCompile/inputFiles.lst" afterDir="false" />
     </list>
     <list id="f8d2ea07-50dd-42cb-9b15-2ba3062013f3" name="Other" comment="">
       <change beforePath="$PROJECT_DIR$/out/artifacts/astric_api_jar/astric_api.jar" beforeDir="false" afterPath="$PROJECT_DIR$/out/artifacts/astric_api_jar/astric_api.jar" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/META-INF/astric_api.kotlin_module" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/META-INF/astric_api.kotlin_module" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/META-INF/astric_api.kotlin_module" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/astric/server/dao/FollowingDAOImpl.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/astric/server/dao/FollowingDAOImpl.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/astric/server/dao/UserDAOImpl.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/astric/server/dao/UserDAOImpl.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/astric/server/lambda/account/LoginHandler.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/astric/server/lambda/account/LoginHandler.class" afterDir="false" />
@@ -34,6 +63,13 @@
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="MavenImportPreferences">
+    <option name="importingSettings">
+      <MavenImportingSettings>
+        <option name="importAutomatically" value="true" />
+      </MavenImportingSettings>
+    </option>
   </component>
   <component name="ProjectId" id="1aDaaxOfNyl3tLz6Kro5iazHfL4" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
@@ -60,6 +96,7 @@
     <property name="project.structure.last.edited" value="Artifacts" />
     <property name="project.structure.proportion" value="0.0" />
     <property name="project.structure.side.proportion" value="0.0" />
+    <property name="run.code.analysis.last.selected.profile" value="pProject Default" />
     <property name="settings.editor.selected.configurable" value="preferences.externalDependencies" />
     <property name="show.migrate.to.gradle.popup" value="false" />
   </component>
@@ -68,11 +105,11 @@
       <recent name="astric.model" />
     </key>
     <key name="CopyClassDialog.RECENTS_KEY">
-      <recent name="follow" />
       <recent name="account" />
+      <recent name="astric.model.dao" />
+      <recent name="follow" />
       <recent name="astric.model.service.response.follow" />
       <recent name="astric.model.service.request.follow" />
-      <recent name="astric.server.lambda.follow" />
     </key>
     <key name="CreateClassDialog.RecentsKey">
       <recent name="astric.server.dao" />
@@ -80,7 +117,30 @@
       <recent name="astric.server.service" />
     </key>
   </component>
-  <component name="RunManager" selected="JUnit.UserDAOImplTest.testUserExistsWithHandle">
+  <component name="RunManager" selected="JUnit.HashUtilTest.testHash">
+    <configuration name="All in astric_api" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="astric_api" />
+      <option name="PACKAGE_NAME" value="" />
+      <option name="TEST_OBJECT" value="package" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="AuthDAOImplTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="astric_api" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="account.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="account" />
+      <option name="MAIN_CLASS_NAME" value="account.AuthDAOImplTest" />
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="HashUtilTest.testHash" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="astric_api" />
       <extension name="coverage">
@@ -97,7 +157,7 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="UserDAOImplTest.testUserExists" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="UserDAOImplTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="astric_api" />
       <extension name="coverage">
         <pattern>
@@ -107,8 +167,7 @@
       </extension>
       <option name="PACKAGE_NAME" value="account" />
       <option name="MAIN_CLASS_NAME" value="account.UserDAOImplTest" />
-      <option name="METHOD_NAME" value="testUserExists" />
-      <option name="TEST_OBJECT" value="method" />
+      <option name="TEST_OBJECT" value="class" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -129,45 +188,13 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="UserDAOImplTest.testUserExistsWithUsername" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="astric_api" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="account.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="account" />
-      <option name="MAIN_CLASS_NAME" value="account.UserDAOImplTest" />
-      <option name="METHOD_NAME" value="testUserExistsWithUsername" />
-      <option name="TEST_OBJECT" value="method" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="UserDAOImplTest.testWriteToUserTable" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="astric_api" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="account.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="account" />
-      <option name="MAIN_CLASS_NAME" value="account.UserDAOImplTest" />
-      <option name="METHOD_NAME" value="testWriteToUserTable" />
-      <option name="TEST_OBJECT" value="method" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="JUnit.UserDAOImplTest.testUserExistsWithHandle" />
-        <item itemvalue="JUnit.UserDAOImplTest.testUserExistsWithUsername" />
-        <item itemvalue="JUnit.UserDAOImplTest.testWriteToUserTable" />
-        <item itemvalue="JUnit.UserDAOImplTest.testUserExists" />
         <item itemvalue="JUnit.HashUtilTest.testHash" />
+        <item itemvalue="JUnit.AuthDAOImplTest" />
+        <item itemvalue="JUnit.UserDAOImplTest" />
+        <item itemvalue="JUnit.All in astric_api" />
+        <item itemvalue="JUnit.UserDAOImplTest.testUserExistsWithHandle" />
       </list>
     </recent_temporary>
   </component>
@@ -182,7 +209,8 @@
       <workItem from="1584976780974" duration="42911000" />
       <workItem from="1586272701514" duration="3743000" />
       <workItem from="1586285001401" duration="650000" />
-      <workItem from="1586442306585" duration="3975000" />
+      <workItem from="1586442306585" duration="9608000" />
+      <workItem from="1586458106327" duration="3430000" />
     </task>
     <task id="LOCAL-00001" summary="add auth token to loginResponse">
       <created>1585060621785</created>
@@ -275,7 +303,14 @@
       <option name="project" value="LOCAL" />
       <updated>1586443361596</updated>
     </task>
-    <option name="localTasksCounter" value="14" />
+    <task id="LOCAL-00014" summary="query user table with username or handle">
+      <created>1586448615178</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1586448615178</updated>
+    </task>
+    <option name="localTasksCounter" value="15" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -295,52 +330,77 @@
     <MESSAGE value="is following logic" />
     <MESSAGE value="authenticationService" />
     <MESSAGE value="hashing and user table beginner code" />
-    <option name="LAST_COMMIT_MESSAGE" value="hashing and user table beginner code" />
+    <MESSAGE value="query user table with username or handle" />
+    <option name="LAST_COMMIT_MESSAGE" value="query user table with username or handle" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="773" y="242" key="#com.intellij.ide.util.MemberChooser" timestamp="1586444658735">
+    <state x="781" y="170" key="#Plugins" timestamp="1586458275554">
       <screen x="0" y="23" width="1920" height="1057" />
     </state>
-    <state x="773" y="242" key="#com.intellij.ide.util.MemberChooser/1920.-575.1080.1897/-1680.23.1680.1027/0.23.1920.1057@0.23.1920.1057" timestamp="1586444658735" />
-    <state x="571" y="154" key="CommitChangelistDialog2" timestamp="1586443360817">
+    <state x="781" y="170" key="#Plugins/1920.-575.1080.1897/-1680.23.1680.1027/0.23.1920.1057@0.23.1920.1057" timestamp="1586458275554" />
+    <state x="773" y="242" key="#com.intellij.ide.util.MemberChooser" timestamp="1586449041610">
       <screen x="0" y="23" width="1920" height="1057" />
     </state>
-    <state x="571" y="154" key="CommitChangelistDialog2/1920.-575.1080.1897/-1680.23.1680.1027/0.23.1920.1057@0.23.1920.1057" timestamp="1586443360817" />
-    <state width="1878" height="283" key="GridCell.Tab.0.bottom" timestamp="1586448588725">
+    <state x="773" y="242" key="#com.intellij.ide.util.MemberChooser/1920.-575.1080.1897/-1680.23.1680.1027/0.23.1920.1057@0.23.1920.1057" timestamp="1586449041610" />
+    <state x="698" y="342" key="#com.intellij.ide.util.TreeClassChooserDialog" timestamp="1586450274851">
       <screen x="0" y="23" width="1920" height="1057" />
     </state>
-    <state width="1878" height="283" key="GridCell.Tab.0.bottom/1920.-575.1080.1897/-1680.23.1680.1027/0.23.1920.1057@0.23.1920.1057" timestamp="1586448588725" />
-    <state width="1878" height="283" key="GridCell.Tab.0.center" timestamp="1586448588724">
+    <state x="698" y="342" key="#com.intellij.ide.util.TreeClassChooserDialog/1920.-575.1080.1897/-1680.23.1680.1027/0.23.1920.1057@0.23.1920.1057" timestamp="1586450274851" />
+    <state x="698" y="305" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog" timestamp="1586453721239">
       <screen x="0" y="23" width="1920" height="1057" />
     </state>
-    <state width="1878" height="283" key="GridCell.Tab.0.center/1920.-575.1080.1897/-1680.23.1680.1027/0.23.1920.1057@0.23.1920.1057" timestamp="1586448588724" />
-    <state width="1878" height="283" key="GridCell.Tab.0.left" timestamp="1586448588724">
+    <state x="698" y="305" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/1920.-575.1080.1897/-1680.23.1680.1027/0.23.1920.1057@0.23.1920.1057" timestamp="1586453721239" />
+    <state x="690" y="405" key="ANALYSIS_DLG_com.intellij.analysis.BaseAnalysisAction$1" timestamp="1586453317190">
       <screen x="0" y="23" width="1920" height="1057" />
     </state>
-    <state width="1878" height="283" key="GridCell.Tab.0.left/1920.-575.1080.1897/-1680.23.1680.1027/0.23.1920.1057@0.23.1920.1057" timestamp="1586448588724" />
-    <state width="1878" height="283" key="GridCell.Tab.0.right" timestamp="1586448588725">
+    <state x="690" y="405" key="ANALYSIS_DLG_com.intellij.analysis.BaseAnalysisAction$1/1920.-575.1080.1897/-1680.23.1680.1027/0.23.1920.1057@0.23.1920.1057" timestamp="1586453317190" />
+    <state x="571" y="154" key="CommitChangelistDialog2" timestamp="1586534697004">
       <screen x="0" y="23" width="1920" height="1057" />
     </state>
-    <state width="1878" height="283" key="GridCell.Tab.0.right/1920.-575.1080.1897/-1680.23.1680.1027/0.23.1920.1057@0.23.1920.1057" timestamp="1586448588725" />
+    <state x="571" y="154" key="CommitChangelistDialog2/1920.-575.1080.1897/-1680.23.1680.1027/0.23.1920.1057@0.23.1920.1057" timestamp="1586534697004" />
+    <state width="1878" height="363" key="GridCell.Tab.0.bottom" timestamp="1586534697040">
+      <screen x="0" y="23" width="1920" height="1057" />
+    </state>
+    <state width="1878" height="363" key="GridCell.Tab.0.bottom/1920.-575.1080.1897/-1680.23.1680.1027/0.23.1920.1057@0.23.1920.1057" timestamp="1586534697040" />
+    <state width="1878" height="363" key="GridCell.Tab.0.center" timestamp="1586534697039">
+      <screen x="0" y="23" width="1920" height="1057" />
+    </state>
+    <state width="1878" height="363" key="GridCell.Tab.0.center/1920.-575.1080.1897/-1680.23.1680.1027/0.23.1920.1057@0.23.1920.1057" timestamp="1586534697039" />
+    <state width="1878" height="363" key="GridCell.Tab.0.left" timestamp="1586534697039">
+      <screen x="0" y="23" width="1920" height="1057" />
+    </state>
+    <state width="1878" height="363" key="GridCell.Tab.0.left/1920.-575.1080.1897/-1680.23.1680.1027/0.23.1920.1057@0.23.1920.1057" timestamp="1586534697039" />
+    <state width="1878" height="363" key="GridCell.Tab.0.right" timestamp="1586534697040">
+      <screen x="0" y="23" width="1920" height="1057" />
+    </state>
+    <state width="1878" height="363" key="GridCell.Tab.0.right/1920.-575.1080.1897/-1680.23.1680.1027/0.23.1920.1057@0.23.1920.1057" timestamp="1586534697040" />
+    <state x="448" y="133" key="SettingsEditor" timestamp="1586450440487">
+      <screen x="0" y="23" width="1920" height="1057" />
+    </state>
+    <state x="448" y="133" key="SettingsEditor/1920.-575.1080.1897/-1680.23.1680.1027/0.23.1920.1057@0.23.1920.1057" timestamp="1586450440487" />
     <state x="798" y="428" key="VCS.EditChangelistDialog" timestamp="1586443377793">
       <screen x="0" y="23" width="1920" height="1057" />
     </state>
     <state x="798" y="428" key="VCS.EditChangelistDialog/1920.-575.1080.1897/-1680.23.1680.1027/0.23.1920.1057@0.23.1920.1057" timestamp="1586443377793" />
-    <state x="560" y="291" key="Vcs.Push.Dialog.v2" timestamp="1586443364100">
+    <state x="560" y="291" key="Vcs.Push.Dialog.v2" timestamp="1586448616574">
       <screen x="0" y="23" width="1920" height="1057" />
     </state>
-    <state x="560" y="291" key="Vcs.Push.Dialog.v2/1920.-575.1080.1897/-1680.23.1680.1027/0.23.1920.1057@0.23.1920.1057" timestamp="1586443364100" />
+    <state x="560" y="291" key="Vcs.Push.Dialog.v2/1920.-575.1080.1897/-1680.23.1680.1027/0.23.1920.1057@0.23.1920.1057" timestamp="1586448616574" />
     <state x="1920" y="253" key="new project wizard" timestamp="1586273102818">
       <screen x="1920" y="-575" width="1080" height="1897" />
     </state>
     <state x="1920" y="253" key="new project wizard/1920.-575.1080.1897/-1680.23.1680.1027/0.23.1920.1057@1920.-575.1080.1897" timestamp="1586273102818" />
+    <state x="592" y="256" width="670" height="676" key="search.everywhere.popup" timestamp="1586458211981">
+      <screen x="0" y="23" width="1920" height="1057" />
+    </state>
+    <state x="592" y="256" width="670" height="676" key="search.everywhere.popup/1920.-575.1080.1897/-1680.23.1680.1027/0.23.1920.1057@0.23.1920.1057" timestamp="1586458211981" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/astric/server/dao/PostDAOImpl.java</url>
-          <line>75</line>
+          <line>74</line>
           <option name="timeStamp" value="2" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
@@ -362,95 +422,5 @@
         <evaluation-mode>CODE_FRAGMENT</evaluation-mode>
       </expression>
     </expressions>
-  </component>
-  <component name="masterDetails">
-    <states>
-      <state key="ArtifactsStructureConfigurable.UI">
-        <settings>
-          <artifact-editor />
-          <last-edited>astric_api:jar</last-edited>
-          <splitter-proportions>
-            <option name="proportions">
-              <list>
-                <option value="0.2" />
-                <option value="0.5" />
-              </list>
-            </option>
-          </splitter-proportions>
-        </settings>
-      </state>
-      <state key="FacetStructureConfigurable.UI">
-        <settings>
-          <last-edited>No facets are configured</last-edited>
-          <splitter-proportions>
-            <option name="proportions">
-              <list>
-                <option value="0.2" />
-              </list>
-            </option>
-          </splitter-proportions>
-        </settings>
-      </state>
-      <state key="GlobalLibrariesConfigurable.UI">
-        <settings>
-          <splitter-proportions>
-            <option name="proportions">
-              <list>
-                <option value="0.2" />
-              </list>
-            </option>
-          </splitter-proportions>
-        </settings>
-      </state>
-      <state key="JdkListConfigurable.UI">
-        <settings>
-          <last-edited>1.8</last-edited>
-          <splitter-proportions>
-            <option name="proportions">
-              <list>
-                <option value="0.2" />
-              </list>
-            </option>
-          </splitter-proportions>
-        </settings>
-      </state>
-      <state key="ModuleStructureConfigurable.UI">
-        <settings>
-          <last-edited>astric_api</last-edited>
-          <splitter-proportions>
-            <option name="proportions">
-              <list>
-                <option value="0.2" />
-                <option value="0.6" />
-              </list>
-            </option>
-          </splitter-proportions>
-        </settings>
-      </state>
-      <state key="ProjectJDKs.UI">
-        <settings>
-          <last-edited>1.8</last-edited>
-          <splitter-proportions>
-            <option name="proportions">
-              <list>
-                <option value="0.2" />
-              </list>
-            </option>
-          </splitter-proportions>
-        </settings>
-      </state>
-      <state key="ProjectLibrariesConfigurable.UI">
-        <settings>
-          <last-edited>Maven: com.amazonaws:aws-lambda-java-core:1.2.0</last-edited>
-          <splitter-proportions>
-            <option name="proportions">
-              <list>
-                <option value="0.2" />
-              </list>
-            </option>
-          </splitter-proportions>
-        </settings>
-      </state>
-    </states>
   </component>
 </project>

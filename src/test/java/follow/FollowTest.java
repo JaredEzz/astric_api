@@ -6,7 +6,6 @@ import astric.model.service.response.follow.FollowResponse;
 import astric.server.dao.FollowingDAOImpl;
 import org.junit.jupiter.api.Test;
 
-import static astric.server.dao.UserDAOImpl.hardCodedUsers;
 import static org.junit.jupiter.api.Assertions.*;
 
 class FollowTest {

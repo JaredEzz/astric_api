@@ -11,7 +11,7 @@ import static org.junit.jupiter.api.Assertions.*;
 public class SignUpTest {
     @Test
     void testSignUp() {
-        SignUpRequest signUpRequest = new SignUpRequest("Jared Hasson", "jaredhas", "jared", "@jhass", "Instance of ImageProvider");
+        SignUpRequest signUpRequest = new SignUpRequest("jaredhas", "jared", "Jared Hasson", "@jhass", "Instance of ImageProvider");
         UserDAO userDAO = new UserDAOImpl();
         SignUpResponse signUpResponse = userDAO.signUp(signUpRequest);
 

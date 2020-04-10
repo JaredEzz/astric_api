@@ -1,9 +1,7 @@
 package account;
 
 import astric.model.dao.UserDAO;
-import astric.model.service.request.account.LoginRequest;
 import astric.model.service.request.account.LogoutRequest;
-import astric.model.service.response.account.LoginResponse;
 import astric.model.service.response.account.LogoutResponse;
 import astric.server.dao.UserDAOImpl;
 import org.junit.jupiter.api.Test;

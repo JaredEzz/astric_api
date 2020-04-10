@@ -1,9 +1,5 @@
 package astric.model.service.request.account;
 
-import astric.model.domain.User;
-
-import java.awt.*;
-
 public class SignUpRequest {
     private String name;
     private String username;
@@ -20,10 +16,10 @@ public class SignUpRequest {
      * Creates an instance.
      *
      */
-    public SignUpRequest(String name, String username, String password, String handle, String image) {
-        this.name = name;
+    public SignUpRequest(String username, String password, String name,  String handle, String image) {
         this.username = username;
         this.password = password;
+        this.name = name;
         this.handle = handle;
         this.image = image;
     }

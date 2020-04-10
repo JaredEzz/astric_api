@@ -1,5 +1,6 @@
 package astric.server.dao;
 
+import astric.model.dao.AuthDAO;
 import astric.server.lambda.account.HashUtil;
 import astric.model.dao.UserDAO;
 import astric.model.domain.User;
@@ -13,7 +14,6 @@ import com.amazonaws.regions.Regions;
 import com.amazonaws.services.dynamodbv2.AmazonDynamoDB;
 import com.amazonaws.services.dynamodbv2.AmazonDynamoDBClientBuilder;
 import com.amazonaws.services.dynamodbv2.document.*;
-import com.amazonaws.services.dynamodbv2.document.spec.GetItemSpec;
 import com.amazonaws.services.dynamodbv2.document.spec.QuerySpec;
 import com.amazonaws.services.dynamodbv2.document.utils.NameMap;
 import com.amazonaws.services.dynamodbv2.document.utils.ValueMap;
@@ -25,14 +25,15 @@ public class UserDAOImpl implements UserDAO {
     AmazonDynamoDB client;
     DynamoDB dynamoDB;
     Table table;
+    AuthDAOImpl authDAO;
 
     public static List<User> hardCodedUsers = Arrays.asList(
-            new User("Jared", "Hasson", "@jaredezz", "assets/images/astric.png", "jaredhasson"),
-            new User("Thomas", "Banks", "@tb", "assets/images/man_profile.png", "tbanks"),
-            new User("Wendy", "Watts", "@wwatts", "assets/images/woman_profile.png", "wendyw"),
-            new User("Orville", "Klaus", "@santa", "assets/images/santa.png", "ovk"),
-            new User("Manny", "Woodpecker", "@birdlover", "assets/images/woodpecker.jpg", "mannywp"),
-            new User("Fanny", "Follower", "@ff", "assets/images/fanny_pack.jpeg", "follo"));
+            new User("Jared Hasson", "@jaredezz", "assets/images/astric.png", "jaredhasson"),
+            new User("Thomas Banks", "@tb", "assets/images/man_profile.png", "tbanks"),
+            new User("Wendy Watts", "@wwatts", "assets/images/woman_profile.png", "wendyw"),
+            new User("Orville Klaus", "@santa", "assets/images/santa.png", "ovk"),
+            new User("Manny Woodpecker", "@birdlover", "assets/images/woodpecker.jpg", "mannywp"),
+            new User("Fanny Follower", "@ff", "assets/images/fanny_pack.jpeg", "follo"));
 
 
     private List<String> usernames = Arrays.asList("username", "jaredhasson");
@@ -48,47 +49,54 @@ public class UserDAOImpl implements UserDAO {
         this.client = AmazonDynamoDBClientBuilder.standard().withRegion(Regions.US_WEST_2).build();
         this.dynamoDB = new DynamoDB(client);
         this.table = dynamoDB.getTable("Users");
+        this.authDAO = new AuthDAOImpl();
     }
 
     @Override
     public SignUpResponse signUp(SignUpRequest request) {
-        // TODO check username against existing database, if username/handle doesn't exist,
         String username = request.getUsername();
         String handle = request.getHandle();
 
-
         // return success message, (milestone 4 - add user to database)
-        if (usernames.contains(username)) {
+        if (userExistsWithUsername(username)) {
             //username exists in user db
             return new SignUpResponse(false, null, "Username already exists.");
-        } else if (handles.contains(handle)) {
+        } else if (userExistsWithHandle(handle)) {
             //handle exists in user db
             return new SignUpResponse(false, null, "Handle already exists.");
         } else {
             //hash password
             String hashedPassword = HashUtil.hashPassword(request.getPassword());
 
-            //add user to user table
-            User userToAdd = new User("Test User First", "Test User Last", "alias", "S3Url", "username");
-
-            //generate auth token
-
             //add sign up action to auth table
+            String authToken = authDAO.signUp(username);
+
+            //add user to user table
+            User userToAdd = new User(request.getName(), handle, "S3Url", username);
+            writeToUserTable(userToAdd, hashedPassword);
 
             //return auth token
-
-            String auth = "ae04c02a-bc73-4b58-984d-e5038c6f7c02";
-            return new SignUpResponse(true, auth);
+            return new SignUpResponse(true, authToken);
         }
     }
 
     @Override
     public LoginResponse login(LoginRequest request) {
         String username = request.getUsername();
-        String password = request.getPassword();
+        String givenPassword = request.getPassword();
+
         String expectedPassword = usernamePasswordMap.get(username);
-        //check password TODO hashing
-        if (expectedPassword != null && expectedPassword.equals(password)) {
+        //hash given password
+        String givenHash = HashUtil.hashPassword(givenPassword);
+
+        //get user
+
+        //check that the hashes are equal
+
+
+
+
+        if (expectedPassword != null && expectedPassword.equals(givenPassword)) {
 //            String auth = UUID.randomUUID().toString();
             // milestone 4 - set up auth token/session to expire
             String auth = "ae04c02a-bc73-4b58-984d-e5038c6f7c02";
@@ -126,8 +134,7 @@ public class UserDAOImpl implements UserDAO {
                                     .withPrimaryKey("username", username)
                             .withPrimaryKey("handle", handle)
                             .withString("passwordHash", passwordHash)
-                            .withString("firstName", user.getFirstName())
-                            .withString("lastName", user.getLastName())
+                            .withString("name", user.getName())
                             .withString("imageURL", user.getImageUrl())
                                     );
 

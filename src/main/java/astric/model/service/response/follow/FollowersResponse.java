@@ -2,7 +2,6 @@ package astric.model.service.response.follow;
 
 import astric.model.domain.User;
 import astric.model.service.request.follow.FollowersRequest;
-import astric.model.service.request.follow.FollowingRequest;
 import astric.model.service.response.PagedResponse;
 
 import java.util.List;
