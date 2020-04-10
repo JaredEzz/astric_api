@@ -43,6 +43,18 @@ public class AuthDAOImpl implements AuthDAO {
         String authToken = generateAuthToken();
         Action action = Action.SIGNUP;
 
+        return putAuthTableAction(username, timestamp, authToken, action);
+    }
+
+    public String login(String username) {
+        Instant timestamp = Instant.now();
+        String authToken = generateAuthToken();
+        Action action = Action.LOGIN;
+
+        return putAuthTableAction(username, timestamp, authToken, action);
+    }
+
+    private String putAuthTableAction(String username, Instant timestamp, String authToken, Action action) {
         PutItemOutcome outcome = null;
         try {
             outcome = table
@@ -56,8 +68,6 @@ public class AuthDAOImpl implements AuthDAO {
         } catch (Exception e) {
             e.printStackTrace();
         }
-
         return outcome == null ? null : authToken;
     }
-
 }

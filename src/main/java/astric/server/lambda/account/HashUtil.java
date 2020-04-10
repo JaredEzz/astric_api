@@ -28,7 +28,7 @@ public class HashUtil {
         return result;
     }
 
-    public static boolean validatePassword(String originalPassword, String hashedPassword) throws NoSuchAlgorithmException, InvalidKeySpecException {
+    public static boolean validatePassword(String originalPassword, String hashedPassword) {
         boolean result = false;
         try {
             String[] parts = hashedPassword.split(":");

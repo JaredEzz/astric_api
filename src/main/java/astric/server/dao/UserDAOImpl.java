@@ -85,22 +85,14 @@ public class UserDAOImpl implements UserDAO {
         String username = request.getUsername();
         String givenPassword = request.getPassword();
 
-        String expectedPassword = usernamePasswordMap.get(username);
-        //hash given password
-        String givenHash = HashUtil.hashPassword(givenPassword);
+        String storedPassword = getStoredPassword(username);
 
-        //get user
+        boolean verified = HashUtil.validatePassword(givenPassword, storedPassword);
 
-        //check that the hashes are equal
-
-
-
-
-        if (expectedPassword != null && expectedPassword.equals(givenPassword)) {
-//            String auth = UUID.randomUUID().toString();
-            // milestone 4 - set up auth token/session to expire
-            String auth = "ae04c02a-bc73-4b58-984d-e5038c6f7c02";
-            return new LoginResponse(true, auth);
+        if (verified) {
+            //add login action to auth table
+            String authToken = authDAO.login(username);
+            return new LoginResponse(true, authToken);
         } else {
             return new LoginResponse(false, "Your username or password is invalid.", null);
         }
@@ -121,6 +113,21 @@ public class UserDAOImpl implements UserDAO {
         return null;
     }
 
+    private String getStoredPassword(String username) {
+        String result = null;
+        try {
+            Item item = table.getItem("username", username);
+
+            System.out.println("Printing item after retrieving it....");
+            System.out.println(item.toJSONPretty());
+            result = (String) item.get("passwordHash");
+        } catch (Exception e) {
+            System.err.println("GetItem failed.");
+            System.err.println(e.getMessage());
+        }
+        return result;
+    }
+
 
     public void writeToUserTable(User user, String passwordHash) {
         String username = user.getUsername();
@@ -132,11 +139,11 @@ public class UserDAOImpl implements UserDAO {
                     .putItem(
                             new Item()
                                     .withPrimaryKey("username", username)
-                            .withPrimaryKey("handle", handle)
-                            .withString("passwordHash", passwordHash)
-                            .withString("name", user.getName())
-                            .withString("imageURL", user.getImageUrl())
-                                    );
+                                    .withPrimaryKey("handle", handle)
+                                    .withString("passwordHash", passwordHash)
+                                    .withString("name", user.getName())
+                                    .withString("imageURL", user.getImageUrl())
+                    );
 
             System.out.println("PutItem succeeded:\n" + outcome.getPutItemResult());
         } catch (Exception e) {
@@ -146,8 +153,8 @@ public class UserDAOImpl implements UserDAO {
     }
 
     public boolean userExistsWithUsername(String username) {
-        Item item =  null;
-        try{
+        Item item = null;
+        try {
             item = table.getItem("username", username);
         } catch (Exception e) {
             e.printStackTrace();

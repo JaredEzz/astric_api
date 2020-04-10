@@ -2,42 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="dd1263c4-294a-4e0e-8a6e-b617f72e087d" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/astric/model/dao/AuthDAO.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/astric/server/dao/AuthDAOImpl.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test/java/account/AuthDAOImplTest.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/astric/model/domain/Post.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/astric/model/domain/Post.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/astric/model/domain/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/astric/model/domain/User.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/astric/model/service/request/account/SignUpRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/astric/model/service/request/account/SignUpRequest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/astric/model/service/request/post/FeedRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/astric/model/service/request/post/FeedRequest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/astric/model/service/response/follow/FollowersResponse.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/astric/model/service/response/follow/FollowersResponse.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/astric/server/dao/FollowGenerator.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/astric/server/dao/FollowingDAOImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/astric/server/dao/FollowingDAOImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/astric/server/dao/PostDAOImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/astric/server/dao/PostDAOImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/astric/server/dao/AuthDAOImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/astric/server/dao/AuthDAOImpl.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/astric/server/dao/UserDAOImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/astric/server/dao/UserDAOImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/astric/server/dao/UserGenerator.java" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/astric/server/lambda/account/HashUtil.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/astric/server/lambda/account/HashUtil.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/astric/server/lambda/follow/FollowHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/astric/server/lambda/follow/FollowHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/astric/server/lambda/follow/GetFollowersHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/astric/server/lambda/follow/GetFollowersHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/astric/server/lambda/follow/IsFollowingHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/astric/server/lambda/follow/IsFollowingHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/account/HashUtilTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/account/HashUtilTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/account/LogoutTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/account/LogoutTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/account/SignUpTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/account/SignUpTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/account/UserDAOImplTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/account/UserDAOImplTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/follow/FollowTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/follow/FollowTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/follow/IsFollowingTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/follow/IsFollowingTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/astric_api-1.0-SNAPSHOT.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/astric/model/domain/User.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/astric/model/domain/User.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/astric/server/dao/FollowGenerator$1.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/astric/server/dao/FollowGenerator$Sort.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/astric/server/dao/FollowGenerator.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/astric/server/dao/UserGenerator$Names.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/astric/server/dao/UserGenerator.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/maven-archiver/pom.properties" beforeDir="false" afterPath="$PROJECT_DIR$/target/maven-archiver/pom.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/testCompile/default-testCompile/inputFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/testCompile/default-testCompile/inputFiles.lst" afterDir="false" />
     </list>
     <list id="f8d2ea07-50dd-42cb-9b15-2ba3062013f3" name="Other" comment="">
       <change beforePath="$PROJECT_DIR$/out/artifacts/astric_api_jar/astric_api.jar" beforeDir="false" afterPath="$PROJECT_DIR$/out/artifacts/astric_api_jar/astric_api.jar" afterDir="false" />
@@ -85,6 +53,7 @@
     <property name="aspect.path.notification.shown" value="true" />
     <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1585174850809" />
     <property name="com.intellij.ide.scratch.LRUPopupBuilder$1/New Scratch File" value="JAVA" />
+    <property name="extract.method.default.visibility" value="private" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.tslint" value="true" />
     <property name="node.js.path.for.package.eslint" value="project" />
@@ -210,7 +179,7 @@
       <workItem from="1586272701514" duration="3743000" />
       <workItem from="1586285001401" duration="650000" />
       <workItem from="1586442306585" duration="9608000" />
-      <workItem from="1586458106327" duration="3430000" />
+      <workItem from="1586458106327" duration="4018000" />
     </task>
     <task id="LOCAL-00001" summary="add auth token to loginResponse">
       <created>1585060621785</created>
@@ -310,7 +279,14 @@
       <option name="project" value="LOCAL" />
       <updated>1586448615178</updated>
     </task>
-    <option name="localTasksCounter" value="15" />
+    <task id="LOCAL-00015" summary="new hashing algorithm and validation">
+      <created>1586534708485</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1586534708485</updated>
+    </task>
+    <option name="localTasksCounter" value="16" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -331,7 +307,8 @@
     <MESSAGE value="authenticationService" />
     <MESSAGE value="hashing and user table beginner code" />
     <MESSAGE value="query user table with username or handle" />
-    <option name="LAST_COMMIT_MESSAGE" value="query user table with username or handle" />
+    <MESSAGE value="new hashing algorithm and validation" />
+    <option name="LAST_COMMIT_MESSAGE" value="new hashing algorithm and validation" />
   </component>
   <component name="WindowStateProjectService">
     <state x="781" y="170" key="#Plugins" timestamp="1586458275554">
@@ -354,10 +331,10 @@
       <screen x="0" y="23" width="1920" height="1057" />
     </state>
     <state x="690" y="405" key="ANALYSIS_DLG_com.intellij.analysis.BaseAnalysisAction$1/1920.-575.1080.1897/-1680.23.1680.1027/0.23.1920.1057@0.23.1920.1057" timestamp="1586453317190" />
-    <state x="571" y="154" key="CommitChangelistDialog2" timestamp="1586534697004">
+    <state x="571" y="154" key="CommitChangelistDialog2" timestamp="1586534707564">
       <screen x="0" y="23" width="1920" height="1057" />
     </state>
-    <state x="571" y="154" key="CommitChangelistDialog2/1920.-575.1080.1897/-1680.23.1680.1027/0.23.1920.1057@0.23.1920.1057" timestamp="1586534697004" />
+    <state x="571" y="154" key="CommitChangelistDialog2/1920.-575.1080.1897/-1680.23.1680.1027/0.23.1920.1057@0.23.1920.1057" timestamp="1586534707564" />
     <state width="1878" height="363" key="GridCell.Tab.0.bottom" timestamp="1586534697040">
       <screen x="0" y="23" width="1920" height="1057" />
     </state>
@@ -382,10 +359,14 @@
       <screen x="0" y="23" width="1920" height="1057" />
     </state>
     <state x="798" y="428" key="VCS.EditChangelistDialog/1920.-575.1080.1897/-1680.23.1680.1027/0.23.1920.1057@0.23.1920.1057" timestamp="1586443377793" />
-    <state x="560" y="291" key="Vcs.Push.Dialog.v2" timestamp="1586448616574">
+    <state x="560" y="291" key="Vcs.Push.Dialog.v2" timestamp="1586534723326">
       <screen x="0" y="23" width="1920" height="1057" />
     </state>
-    <state x="560" y="291" key="Vcs.Push.Dialog.v2/1920.-575.1080.1897/-1680.23.1680.1027/0.23.1920.1057@0.23.1920.1057" timestamp="1586448616574" />
+    <state x="560" y="291" key="Vcs.Push.Dialog.v2/1920.-575.1080.1897/-1680.23.1680.1027/0.23.1920.1057@0.23.1920.1057" timestamp="1586534723326" />
+    <state x="698" y="322" key="extract.method.dialog" timestamp="1586535193634">
+      <screen x="0" y="23" width="1920" height="1057" />
+    </state>
+    <state x="698" y="322" key="extract.method.dialog/1920.-575.1080.1897/-1680.23.1680.1027/0.23.1920.1057@0.23.1920.1057" timestamp="1586535193634" />
     <state x="1920" y="253" key="new project wizard" timestamp="1586273102818">
       <screen x="1920" y="-575" width="1080" height="1897" />
     </state>
