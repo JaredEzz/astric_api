@@ -10,6 +10,16 @@ import astric.model.service.response.follow.FollowResponse;
 import astric.model.service.response.follow.FollowersResponse;
 import astric.model.service.response.follow.FollowingResponse;
 import astric.model.service.response.follow.IsFollowingResponse;
+import com.amazonaws.regions.Regions;
+import com.amazonaws.services.dynamodbv2.AmazonDynamoDB;
+import com.amazonaws.services.dynamodbv2.AmazonDynamoDBClientBuilder;
+import com.amazonaws.services.dynamodbv2.document.*;
+import com.amazonaws.services.dynamodbv2.document.spec.DeleteItemSpec;
+import com.amazonaws.services.dynamodbv2.document.spec.QuerySpec;
+import com.amazonaws.services.dynamodbv2.document.utils.NameMap;
+import com.amazonaws.services.dynamodbv2.document.utils.ValueMap;
+import com.amazonaws.services.dynamodbv2.model.AttributeValue;
+import com.sun.tools.javac.util.Pair;
 
 import java.util.*;
 
@@ -18,37 +28,84 @@ import static astric.server.dao.UserDAOImpl.hardCodedUsers;
 
 public class FollowingDAOImpl implements FollowingDAO {
 
-    private static Map<String, List<User>> followeesByFollower;
-    private static Map<String, List<User>> followersByFollowee;
+    AmazonDynamoDB client;
+    DynamoDB dynamoDB;
+    Table table;
+    UserDAOImpl userDAO;
+
+    public FollowingDAOImpl() {
+        this.client = AmazonDynamoDBClientBuilder.standard().withRegion(Regions.US_WEST_2).build();
+        this.dynamoDB = new DynamoDB(client);
+        this.table = dynamoDB.getTable("Follows");
+        this.userDAO = new UserDAOImpl();
+    }
 
     @Override
     public FollowingResponse getFollowing(FollowingRequest request) {
         assert request.getLimit() > 0;
         assert request.getFollowerUsername() != null;
-
-        if(followeesByFollower == null){
-            followeesByFollower = initializeFollowees();
+        Pair<List<String>, Boolean> result = getAllFollowingPaginated(request.getFollowerUsername(), request.getLimit(), request.getLastFollowee().getUsername());
+        List<User> responseFollowees = new ArrayList<>();
+        for (String username : result.fst) {
+            responseFollowees.add(userDAO.findUser(username));
         }
-
-        List<User> allFollowees = followeesByFollower.get(request.getFollowerUsername());
-        List<User> responseFollowees = new ArrayList<>(request.getLimit());
-
-        boolean hasMorePages = false;
-
-        if (request.getLimit() > 0) {
-            if (allFollowees != null) {
-                int followeesIndex = getFolloweesStartingIndex(request.getLastFollowee(), allFollowees);
-
-                for (int limitCounter = 0; followeesIndex < allFollowees.size() && limitCounter < request.getLimit(); followeesIndex++, limitCounter++) {
-                    responseFollowees.add(allFollowees.get(followeesIndex));
-                }
-
-                hasMorePages = followeesIndex < allFollowees.size();
-            }
-        }
-
+        boolean hasMorePages = result.snd;
         return new FollowingResponse(responseFollowees, hasMorePages);
+    }
 
+//    public void getAllFollowing(String followerUsername) {
+//        Item item;
+//        try {
+//            QuerySpec spec = new QuerySpec()
+//                    .withKeyConditionExpression("#fr = :v_fr")
+//                    .withNameMap(new NameMap().with("#fr", "follower"))
+//                    .withValueMap(new ValueMap().withString(":v_fr", followerUsername))
+//                    .withScanIndexForward(false);
+//            ItemCollection<QueryOutcome> outcome = table.query(spec);
+//            if (outcome != null) {
+//                for (Item value : outcome) {
+//                    item = value;
+//                    System.out.println(item.get("followee"));
+//                }
+//            }
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//    }
+
+    public Pair<List<String>, Boolean> getAllFollowingPaginated(String followerUsername, int pageSize, String lastFollowee) {
+        Item item;
+        Map<String, AttributeValue> lastEvaluatedKey = null;
+        List<String> followingUsernames = new ArrayList<>();
+        try {
+            QuerySpec spec = (lastFollowee == null) ? new QuerySpec()
+                    .withKeyConditionExpression("#fr = :v_fr")
+                    .withNameMap(new NameMap().with("#fr", "follower"))
+                    .withValueMap(new ValueMap().withString(":v_fr", followerUsername))
+                    .withScanIndexForward(true)
+                    .withMaxResultSize(pageSize) :
+                    new QuerySpec()
+                            .withKeyConditionExpression("#fr = :v_fr")
+                            .withNameMap(new NameMap().with("#fr", "follower"))
+                            .withValueMap(new ValueMap().withString(":v_fr", followerUsername))
+                            .withScanIndexForward(true)
+                            .withMaxResultSize(pageSize)
+                            .withExclusiveStartKey("follower", followerUsername, "followee", lastFollowee);
+
+            ItemCollection<QueryOutcome> outcome = table.query(spec);
+            if (outcome != null) {
+                for (Item value : outcome) {
+                    item = value;
+                    lastEvaluatedKey = outcome.getLastLowLevelResult().getQueryResult().getLastEvaluatedKey();
+                    System.out.println(item.get("followee"));
+                    followingUsernames.add((String) item.get("followee"));
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        boolean hasMorePages = lastEvaluatedKey != null;
+        return new Pair<>(followingUsernames, hasMorePages);
     }
 
     @Override
@@ -56,28 +113,49 @@ public class FollowingDAOImpl implements FollowingDAO {
         assert request.getLimit() > 0;
         assert request.getFolloweeUsername() != null;
 
-        if(followersByFollowee == null){
-            followersByFollowee = initializeFollowers();
+        Pair<List<String>, Boolean> result = getAllFollowersPaginated(request.getFolloweeUsername(), request.getLimit(), request.getLastFollower().getUsername());
+        List<User> responseFollowers = new ArrayList<>();
+        for (String username : result.fst) {
+            responseFollowers.add(userDAO.findUser(username));
         }
-
-        List<User> allFollowers = followersByFollowee.get(request.getFolloweeUsername());
-        List<User> responseFollowers = new ArrayList<>(request.getLimit());
-
-        boolean hasMorePages = false;
-
-        if (request.getLimit() > 0) {
-            if (allFollowers != null) {
-                int followeesIndex = getFolloweesStartingIndex(request.getLastFollower(), allFollowers);
-
-                for (int limitCounter = 0; followeesIndex < allFollowers.size() && limitCounter < request.getLimit(); followeesIndex++, limitCounter++) {
-                    responseFollowers.add(allFollowers.get(followeesIndex));
-                }
-
-                hasMorePages = followeesIndex < allFollowers.size();
-            }
-        }
-
+        boolean hasMorePages = result.snd;
         return new FollowersResponse(responseFollowers, hasMorePages);
+    }
+
+    public Pair<List<String>, Boolean> getAllFollowersPaginated(String followeeUsername, int pageSize, String lastFollower) {
+        Item item;
+        Index index = table.getIndex("followee-index");
+        List<String> followersUsernames = new ArrayList<>();
+        Map<String, AttributeValue> lastEvaluatedKey = null;
+        try {
+            QuerySpec spec = (lastFollower == null) ? new QuerySpec()
+                    .withKeyConditionExpression("#fe = :v_fe")
+                    .withNameMap(new NameMap().with("#fe", "followee"))
+                    .withValueMap(new ValueMap().withString(":v_fe", followeeUsername))
+                    .withScanIndexForward(true)
+                    .withMaxResultSize(pageSize) :
+                    new QuerySpec()
+                            .withKeyConditionExpression("#fe = :v_fe")
+                            .withNameMap(new NameMap().with("#fe", "followee"))
+                            .withValueMap(new ValueMap().withString(":v_fe", followeeUsername))
+                            .withScanIndexForward(true)
+                            .withMaxResultSize(pageSize)
+                            .withExclusiveStartKey("followee", followeeUsername, "follower", lastFollower);
+
+            ItemCollection<QueryOutcome> outcome = index.query(spec);
+            if (outcome != null) {
+                for (Item value : outcome) {
+                    item = value;
+                    lastEvaluatedKey = outcome.getLastLowLevelResult().getQueryResult().getLastEvaluatedKey();
+                    System.out.println(item.get("follower"));
+                    followersUsernames.add((String) item.get("follower"));
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        boolean hasMorePages = lastEvaluatedKey != null;
+        return new Pair<>(followersUsernames, hasMorePages);
     }
 
     @Override
@@ -85,31 +163,17 @@ public class FollowingDAOImpl implements FollowingDAO {
         assert request.getFolloweeUsername() != null;
         assert request.getFollowerUsername() != null;
 
-        if(followersByFollowee == null){
-            followersByFollowee = initializeFollowers();
-        }
-
-        List<User> followers = new ArrayList<>(followersByFollowee.get(request.getFolloweeUsername()));
+        String message;
         if (request.isFollow()) {
             //follow
-            User newFollower = new UserDAOImpl().findUser(request.getFollowerUsername());
-            followers.add(newFollower);
-            followersByFollowee.replace(request.getFolloweeUsername(), followers);
+            writeToFollowTable(request.getFollowerUsername(), request.getFolloweeUsername());
+            message = String.format("%s has successfully followed %s", request.getFollowerUsername(), request.getFolloweeUsername());
         } else {
             //unfollow
-            User followerToRemove = new UserDAOImpl().findUser(request.getFollowerUsername());
-            followers.remove(followerToRemove);
-
-            List<User> updatedFollowers = new ArrayList<>();
-            for (User u : followers) {
-                if (!u.getUsername().equals(followerToRemove.getUsername())) {
-                    updatedFollowers.add(u);
-                }
-            }
-            followersByFollowee.replace(request.getFolloweeUsername(), updatedFollowers);
+            removeFromFollowTable(request.getFollowerUsername(), request.getFolloweeUsername());
+            message = String.format("%s has successfully unfollowed %s", request.getFollowerUsername(), request.getFolloweeUsername());
         }
-
-        return new FollowResponse(true);
+        return new FollowResponse(true, message);
     }
 
     @Override
@@ -121,144 +185,86 @@ public class FollowingDAOImpl implements FollowingDAO {
         assert followeeUsername != null;
         assert followerUsername != null;
 
-        if(followersByFollowee == null){
-            followersByFollowee = initializeFollowers();
-        }
+        boolean exists = checkFollowTable(followerUsername, followeeUsername);
 
-        List<User> followers = followersByFollowee.get(followeeUsername); //TODO handle not found
-        for (User u : followers) {
-            if (u.getUsername().equals(followerUsername)) {
-                return new IsFollowingResponse(true, true, String.format("%s is following %s", followerUsername, followeeUsername));
+        return new IsFollowingResponse(true, exists, String.format("%s is %sfollowing %s", followerUsername, exists ? "" : "not ", followeeUsername));
+    }
+
+    public boolean checkFollowTable(String followerUsername, String followeeUsername) {
+        boolean result = false;
+        try {
+            QuerySpec spec = new QuerySpec()
+                    .withKeyConditionExpression("#fr = :v_fr and followee = :v_fe")
+                    .withNameMap(new NameMap().with("#fr", "follower"))
+                    .withValueMap(new ValueMap().withString(":v_fr", followerUsername).withString(":v_fe", followeeUsername));
+            ItemCollection<QueryOutcome> outcome = table.query(spec);
+            if (outcome != null) {
+                Iterator<Item> iterator = outcome.iterator();
+                result = iterator.hasNext();
             }
-        }
-        return new IsFollowingResponse(true, false, String.format("%s is not following %s", followerUsername, followeeUsername));
-    }
-
-    private Map<String, List<User>> initializeFollowees() {
-        Map<String, List<User>> followeesByFollower = new HashMap<>();
-
-        followeesByFollower.put(hardCodedUsers.get(0).getUsername(),
-                Arrays.asList(hardCodedUsers.get(1),
-                                hardCodedUsers.get(2),
-                                hardCodedUsers.get(3),
-                                hardCodedUsers.get(4),
-                                hardCodedUsers.get(5))
-        );
-        followeesByFollower.put(hardCodedUsers.get(1).getUsername(),
-                Arrays.asList(hardCodedUsers.get(0),
-                                hardCodedUsers.get(2),
-                                hardCodedUsers.get(3),
-                                hardCodedUsers.get(4),
-                                hardCodedUsers.get(5))
-        );
-        followeesByFollower.put(hardCodedUsers.get(2).getUsername(),
-                Arrays.asList(hardCodedUsers.get(0),
-                                hardCodedUsers.get(1),
-                                hardCodedUsers.get(3),
-                                hardCodedUsers.get(4),
-                                hardCodedUsers.get(5))
-        );
-        followeesByFollower.put(hardCodedUsers.get(3).getUsername(),
-                Arrays.asList(hardCodedUsers.get(0),
-                                hardCodedUsers.get(1),
-                                hardCodedUsers.get(2),
-                                hardCodedUsers.get(4),
-                                hardCodedUsers.get(5))
-        );
-        followeesByFollower.put(hardCodedUsers.get(4).getUsername(),
-                Arrays.asList(hardCodedUsers.get(0),
-                                hardCodedUsers.get(1),
-                                hardCodedUsers.get(3),
-                                hardCodedUsers.get(2),
-                                hardCodedUsers.get(5))
-        );
-        followeesByFollower.put(hardCodedUsers.get(5).getUsername(),
-                Arrays.asList(hardCodedUsers.get(0),
-                                hardCodedUsers.get(1),
-                                hardCodedUsers.get(3),
-                                hardCodedUsers.get(4),
-                                hardCodedUsers.get(2))
-        );
-
-        return followeesByFollower;
-    }
-
-    private Map<String, List<User>> initializeFollowers() {
-        Map<String, List<User>> followersByFollowee = new HashMap<>();
-
-        followersByFollowee.put(hardCodedUsers.get(0).getUsername(),
-                Arrays.asList(hardCodedUsers.get(1),
-                                hardCodedUsers.get(2),
-                                hardCodedUsers.get(3),
-                                hardCodedUsers.get(4),
-                                hardCodedUsers.get(5))
-        );
-        followersByFollowee.put(hardCodedUsers.get(1).getUsername(),
-                Arrays.asList(hardCodedUsers.get(0),
-                                hardCodedUsers.get(2),
-                                hardCodedUsers.get(3),
-                                hardCodedUsers.get(4),
-                                hardCodedUsers.get(5))
-        );
-        followersByFollowee.put(hardCodedUsers.get(2).getUsername(),
-                Arrays.asList(hardCodedUsers.get(0),
-                                hardCodedUsers.get(1),
-                                hardCodedUsers.get(3),
-                                hardCodedUsers.get(4),
-                                hardCodedUsers.get(5))
-        );
-        followersByFollowee.put(hardCodedUsers.get(3).getUsername(),
-                Arrays.asList(hardCodedUsers.get(0),
-                                hardCodedUsers.get(1),
-                                hardCodedUsers.get(2),
-                                hardCodedUsers.get(4),
-                                hardCodedUsers.get(5))
-        );
-        followersByFollowee.put(hardCodedUsers.get(4).getUsername(),
-                Arrays.asList(hardCodedUsers.get(0),
-                                hardCodedUsers.get(1),
-                                hardCodedUsers.get(3),
-                                hardCodedUsers.get(2),
-                                hardCodedUsers.get(5))
-        );
-        followersByFollowee.put(hardCodedUsers.get(5).getUsername(),
-                Arrays.asList(hardCodedUsers.get(0),
-                                hardCodedUsers.get(1),
-                                hardCodedUsers.get(3),
-                                hardCodedUsers.get(4),
-                                hardCodedUsers.get(2))
-        );
-
-        return followersByFollowee;
-    }
-
-    /**
-     * Determines the index for the first followee in the specified 'allFollowees' list that should
-     * be returned in the current request. This will be the index of the next followee after the
-     * specified 'lastFollowee'.
-     *
-     * @param lastFollowee the last followee that was returned in the previous request or null if
-     *                     there was no previous request.
-     * @param allFollowees the generated list of followees from which we are returning paged results.
-     * @return the index of the first followee to be returned.
-     */
-    private int getFolloweesStartingIndex(User lastFollowee, List<User> allFollowees) {
-
-        int followeesIndex = 0;
-
-        if(lastFollowee != null) {
-            // This is a paged request for something after the first page. Find the first item
-            // we should return
-            for (int i = 0; i < allFollowees.size(); i++) {
-                if(lastFollowee.equals(allFollowees.get(i))) {
-                    // We found the index of the last item returned last time. Increment to get
-                    // to the first one we should return
-                    followeesIndex = i + 1;
-                }
-            }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
 
-        return followeesIndex;
+        return result;
     }
+
+    public void writeToFollowTable(String follower, String followee) {
+        try {
+            PutItemOutcome outcome = table
+                    .putItem(
+                            new Item()
+                                    .withPrimaryKey("follower", follower)
+                                    .withString("followee", followee)
+                    );
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+
+    public void removeFromFollowTable(String followerUsername, String followeeUsername) {
+        try {
+            DeleteItemOutcome outcome = table
+                    .deleteItem(
+                            new DeleteItemSpec().withPrimaryKey("follower", followerUsername)
+                                    .withConditionExpression("#fe = :val")
+                                    .withNameMap(new NameMap().with("#fe", "followee"))
+                                    .withValueMap(new ValueMap().withString(":val", followeeUsername))
+                    );
+            // Check the response.
+        } catch (Exception e) {
+            System.err.println(e.getMessage());
+        }
+    }
+//
+//    /**
+//     * Determines the index for the first followee in the specified 'allFollowees' list that should
+//     * be returned in the current request. This will be the index of the next followee after the
+//     * specified 'lastFollowee'.
+//     *
+//     * @param lastFollowee the last followee that was returned in the previous request or null if
+//     *                     there was no previous request.
+//     * @param allFollowees the generated list of followees from which we are returning paged results.
+//     * @return the index of the first followee to be returned.
+//     */
+//    private int getFolloweesStartingIndex(User lastFollowee, List<User> allFollowees) {
+//
+//        int followeesIndex = 0;
+//
+//        if (lastFollowee != null) {
+//            // This is a paged request for something after the first page. Find the first item
+//            // we should return
+//            for (int i = 0; i < allFollowees.size(); i++) {
+//                if (lastFollowee.equals(allFollowees.get(i))) {
+//                    // We found the index of the last item returned last time. Increment to get
+//                    // to the first one we should return
+//                    followeesIndex = i + 1;
+//                }
+//            }
+//        }
+//
+//        return followeesIndex;
+//    }
 }
 

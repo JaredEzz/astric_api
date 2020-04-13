@@ -19,7 +19,7 @@ public class User implements Comparable<User> {
         this.username = username;
     }
 
-    private User() {
+    protected User() {
     }
 
     public String getName() {
