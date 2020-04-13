@@ -109,7 +109,7 @@ public class AuthDAOImpl implements AuthDAO {
             }
 
             //check timestamps, within 5 minutes
-            int sessionLength = 5;
+            int sessionLength = 50;
             ChronoUnit timeUnit = ChronoUnit.MINUTES;
             if (elapsedSessionLength(actions, sessionLength, timeUnit)) {
                 return false;

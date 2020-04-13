@@ -1,6 +1,5 @@
 package astric.server.dao;
 
-import astric.model.dao.AuthDAO;
 import astric.server.lambda.account.HashUtil;
 import astric.model.dao.UserDAO;
 import astric.model.domain.User;
@@ -21,12 +20,8 @@ import com.amazonaws.services.dynamodbv2.model.AttributeValue;
 import com.amazonaws.services.dynamodbv2.model.ScanRequest;
 import com.amazonaws.services.dynamodbv2.model.ScanResult;
 import com.amazonaws.services.s3.AmazonS3;
-import com.amazonaws.services.s3.AmazonS3Client;
 import com.amazonaws.services.s3.AmazonS3ClientBuilder;
-import com.amazonaws.services.s3.model.CannedAccessControlList;
 import com.amazonaws.services.s3.model.ObjectMetadata;
-import com.amazonaws.services.s3.model.PutObjectRequest;
-import com.amazonaws.services.s3.model.PutObjectResult;
 import com.amazonaws.util.Base64;
 
 
@@ -119,7 +114,7 @@ public class UserDAOImpl implements UserDAO {
 //            e.printStackTrace();
 //        }
 
-        String uploadFilePath = "profiles/"+username+".png";
+        String uploadFilePath = "profiles/" + username + ".png";
         String bucketname = "hasson340";
         s3.putObject(bucketname, uploadFilePath, inputStream, metadata);
 
@@ -156,10 +151,19 @@ public class UserDAOImpl implements UserDAO {
     }
 
     public User findUser(String username) {
-        for (User u : hardCodedUsers) {
-            if (u.getUsername().equals(username)) {
-                return u;
-            }
+        Item item = null;
+        try {
+            item = table.getItem("username", username);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        if (item != null) {
+            return new User(
+                    item.getString("name"),
+                    item.getString("handle"),
+                    item.getString("imageURL"),
+                    item.getString("username")
+            );
         }
         return null;
     }
@@ -239,7 +243,7 @@ public class UserDAOImpl implements UserDAO {
         ScanResult result = client.scan(scanRequest);
         for (Map<String, AttributeValue> item : result.getItems()) {
             System.out.println(item);
-            users.add(new User(){{
+            users.add(new User() {{
                 setName(String.valueOf(item.get("name").getS()));
                 setAlias(String.valueOf(item.get("handle").getS()));
                 setImageUrl(String.valueOf(item.get("imageURL").getS()));

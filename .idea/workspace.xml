@@ -2,21 +2,17 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="dd1263c4-294a-4e0e-8a6e-b617f72e087d" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/astric/server/queue/QueueProcessor.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/astric/server/queue/SqsClient.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test/java/account/FillDataTest.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test/java/account/FollowDAOImplTest.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/astric/model/domain/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/astric/model/domain/User.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/astric/server/dao/AuthDAOImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/astric/server/dao/AuthDAOImpl.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/astric/server/dao/FollowingDAOImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/astric/server/dao/FollowingDAOImpl.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/astric/server/dao/UserDAOImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/astric/server/dao/UserDAOImpl.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/test/java/account/AuthDAOImplTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/account/AuthDAOImplTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/account/FillDataTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/account/FillDataTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/account/FollowDAOImplTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/account/FollowDAOImplTest.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/test/java/account/UserDAOImplTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/account/UserDAOImplTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/maven-archiver/pom.properties" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/testCompile/default-testCompile/inputFiles.lst" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/follow/GetFollowersTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/follow/GetFollowersTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/follow/GetFollowingTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/follow/GetFollowingTest.java" afterDir="false" />
     </list>
     <list id="f8d2ea07-50dd-42cb-9b15-2ba3062013f3" name="Other" comment="">
       <change beforePath="$PROJECT_DIR$/out/artifacts/astric_api_jar/astric_api.jar" beforeDir="false" afterPath="$PROJECT_DIR$/out/artifacts/astric_api_jar/astric_api.jar" afterDir="false" />
@@ -104,40 +100,8 @@
       <recent name="$PROJECT_DIR$/src" />
     </key>
   </component>
-  <component name="RunManager" selected="JUnit.FollowDAOImplTest.testGetAllFollowersPaginated">
-    <configuration name="FillDataTest.addFollowers" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="astric_api" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="account.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="account" />
-      <option name="MAIN_CLASS_NAME" value="account.FillDataTest" />
-      <option name="METHOD_NAME" value="addFollowers" />
-      <option name="TEST_OBJECT" value="method" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="FillDataTest.fillTestUsers" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="astric_api" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="account.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="account" />
-      <option name="MAIN_CLASS_NAME" value="account.FillDataTest" />
-      <option name="METHOD_NAME" value="fillTestUsers" />
-      <option name="TEST_OBJECT" value="method" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="FollowDAOImplTest.testGetAllFollowersPaginated" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+  <component name="RunManager" selected="JUnit.FollowDAOImplTest.testGetFollowers">
+    <configuration name="FollowDAOImplTest.testCheckFollowTable" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="astric_api" />
       <extension name="coverage">
         <pattern>
@@ -147,7 +111,23 @@
       </extension>
       <option name="PACKAGE_NAME" value="account" />
       <option name="MAIN_CLASS_NAME" value="account.FollowDAOImplTest" />
-      <option name="METHOD_NAME" value="testGetAllFollowersPaginated" />
+      <option name="METHOD_NAME" value="testCheckFollowTable" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="FollowDAOImplTest.testGetFollowers" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="astric_api" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="account.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="account" />
+      <option name="MAIN_CLASS_NAME" value="account.FollowDAOImplTest" />
+      <option name="METHOD_NAME" value="testGetFollowers" />
       <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
@@ -169,7 +149,23 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="UserDAOImplTest.testWriteToUserTable" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="GetFollowingTest.getFollowingTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="astric_api" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="follow.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="follow" />
+      <option name="MAIN_CLASS_NAME" value="follow.GetFollowingTest" />
+      <option name="METHOD_NAME" value="getFollowingTest" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="UserDAOImplTest.testFindUser" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="astric_api" />
       <extension name="coverage">
         <pattern>
@@ -179,7 +175,7 @@
       </extension>
       <option name="PACKAGE_NAME" value="account" />
       <option name="MAIN_CLASS_NAME" value="account.UserDAOImplTest" />
-      <option name="METHOD_NAME" value="testWriteToUserTable" />
+      <option name="METHOD_NAME" value="testFindUser" />
       <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
@@ -187,11 +183,11 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="JUnit.FollowDAOImplTest.testGetAllFollowersPaginated" />
-        <item itemvalue="JUnit.FillDataTest.addFollowers" />
+        <item itemvalue="JUnit.FollowDAOImplTest.testGetFollowers" />
+        <item itemvalue="JUnit.UserDAOImplTest.testFindUser" />
+        <item itemvalue="JUnit.GetFollowingTest.getFollowingTest" />
+        <item itemvalue="JUnit.FollowDAOImplTest.testCheckFollowTable" />
         <item itemvalue="JUnit.FollowDAOImplTest.testWriteToFollowTable" />
-        <item itemvalue="JUnit.UserDAOImplTest.testWriteToUserTable" />
-        <item itemvalue="JUnit.FillDataTest.fillTestUsers" />
       </list>
     </recent_temporary>
   </component>
@@ -209,7 +205,7 @@
       <workItem from="1586442306585" duration="9608000" />
       <workItem from="1586458106327" duration="15740000" />
       <workItem from="1586798575114" duration="6745000" />
-      <workItem from="1586805545160" duration="10170000" />
+      <workItem from="1586805545160" duration="14766000" />
     </task>
     <task id="LOCAL-00001" summary="add auth token to loginResponse">
       <created>1585060621785</created>
@@ -344,7 +340,14 @@
       <option name="project" value="LOCAL" />
       <updated>1586543453757</updated>
     </task>
-    <option name="localTasksCounter" value="20" />
+    <task id="LOCAL-00020" summary="paginated follower/following logic">
+      <created>1586817751449</created>
+      <option name="number" value="00020" />
+      <option name="presentableId" value="LOCAL-00020" />
+      <option name="project" value="LOCAL" />
+      <updated>1586817751449</updated>
+    </task>
+    <option name="localTasksCounter" value="21" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -369,7 +372,8 @@
     <MESSAGE value="implemented login" />
     <MESSAGE value="implemented log out" />
     <MESSAGE value="implemented upload to s3 bucket" />
-    <option name="LAST_COMMIT_MESSAGE" value="implemented upload to s3 bucket" />
+    <MESSAGE value="paginated follower/following logic" />
+    <option name="LAST_COMMIT_MESSAGE" value="paginated follower/following logic" />
   </component>
   <component name="WindowStateProjectService">
     <state x="560" y="217" key="#Auto_Import" timestamp="1586536637279">
@@ -400,37 +404,38 @@
       <screen x="0" y="23" width="1920" height="1057" />
     </state>
     <state x="690" y="405" key="ANALYSIS_DLG_com.intellij.analysis.BaseAnalysisAction$1/1920.-575.1080.1897/-1680.23.1680.1027/0.23.1920.1057@0.23.1920.1057" timestamp="1586453317190" />
-    <state x="571" y="154" key="CommitChangelistDialog2" timestamp="1586543453486">
+    <state x="571" y="154" key="CommitChangelistDialog2" timestamp="1586817750665">
       <screen x="0" y="23" width="1920" height="1057" />
     </state>
+    <state x="571" y="154" key="CommitChangelistDialog2/0.23.1920.1057/1920.-575.1080.1897/-1680.23.1680.1027@0.23.1920.1057" timestamp="1586817750665" />
     <state x="571" y="154" key="CommitChangelistDialog2/1920.-575.1080.1897/-1680.23.1680.1027/0.23.1920.1057@0.23.1920.1057" timestamp="1586543453486" />
     <state width="652" height="466" key="DebuggerActiveHint" timestamp="1586811596318">
       <screen x="0" y="23" width="1680" height="1027" />
     </state>
     <state width="652" height="466" key="DebuggerActiveHint/0.23.1680.1027@0.23.1680.1027" timestamp="1586811596318" />
-    <state width="1878" height="280" key="GridCell.Tab.0.bottom" timestamp="1586817723332">
+    <state width="1878" height="280" key="GridCell.Tab.0.bottom" timestamp="1586822217588">
       <screen x="0" y="23" width="1920" height="1057" />
     </state>
     <state width="1638" height="493" key="GridCell.Tab.0.bottom/0.23.1680.1027@0.23.1680.1027" timestamp="1586814250763" />
-    <state width="1878" height="280" key="GridCell.Tab.0.bottom/0.23.1920.1057/1920.-575.1080.1897/-1680.23.1680.1027@0.23.1920.1057" timestamp="1586817723332" />
+    <state width="1878" height="280" key="GridCell.Tab.0.bottom/0.23.1920.1057/1920.-575.1080.1897/-1680.23.1680.1027@0.23.1920.1057" timestamp="1586822217588" />
     <state width="1878" height="357" key="GridCell.Tab.0.bottom/1920.-575.1080.1897/-1680.23.1680.1027/0.23.1920.1057@0.23.1920.1057" timestamp="1586809474366" />
-    <state width="1878" height="280" key="GridCell.Tab.0.center" timestamp="1586817723331">
+    <state width="1878" height="280" key="GridCell.Tab.0.center" timestamp="1586822217587">
       <screen x="0" y="23" width="1920" height="1057" />
     </state>
     <state width="1638" height="493" key="GridCell.Tab.0.center/0.23.1680.1027@0.23.1680.1027" timestamp="1586814250761" />
-    <state width="1878" height="280" key="GridCell.Tab.0.center/0.23.1920.1057/1920.-575.1080.1897/-1680.23.1680.1027@0.23.1920.1057" timestamp="1586817723331" />
+    <state width="1878" height="280" key="GridCell.Tab.0.center/0.23.1920.1057/1920.-575.1080.1897/-1680.23.1680.1027@0.23.1920.1057" timestamp="1586822217587" />
     <state width="1878" height="357" key="GridCell.Tab.0.center/1920.-575.1080.1897/-1680.23.1680.1027/0.23.1920.1057@0.23.1920.1057" timestamp="1586809474365" />
-    <state width="1878" height="280" key="GridCell.Tab.0.left" timestamp="1586817723331">
+    <state width="1878" height="280" key="GridCell.Tab.0.left" timestamp="1586822217586">
       <screen x="0" y="23" width="1920" height="1057" />
     </state>
     <state width="1638" height="493" key="GridCell.Tab.0.left/0.23.1680.1027@0.23.1680.1027" timestamp="1586814250760" />
-    <state width="1878" height="280" key="GridCell.Tab.0.left/0.23.1920.1057/1920.-575.1080.1897/-1680.23.1680.1027@0.23.1920.1057" timestamp="1586817723331" />
+    <state width="1878" height="280" key="GridCell.Tab.0.left/0.23.1920.1057/1920.-575.1080.1897/-1680.23.1680.1027@0.23.1920.1057" timestamp="1586822217586" />
     <state width="1878" height="357" key="GridCell.Tab.0.left/1920.-575.1080.1897/-1680.23.1680.1027/0.23.1920.1057@0.23.1920.1057" timestamp="1586809474364" />
-    <state width="1878" height="280" key="GridCell.Tab.0.right" timestamp="1586817723332">
+    <state width="1878" height="280" key="GridCell.Tab.0.right" timestamp="1586822217587">
       <screen x="0" y="23" width="1920" height="1057" />
     </state>
     <state width="1638" height="493" key="GridCell.Tab.0.right/0.23.1680.1027@0.23.1680.1027" timestamp="1586814250762" />
-    <state width="1878" height="280" key="GridCell.Tab.0.right/0.23.1920.1057/1920.-575.1080.1897/-1680.23.1680.1027@0.23.1920.1057" timestamp="1586817723332" />
+    <state width="1878" height="280" key="GridCell.Tab.0.right/0.23.1920.1057/1920.-575.1080.1897/-1680.23.1680.1027@0.23.1920.1057" timestamp="1586822217587" />
     <state width="1878" height="357" key="GridCell.Tab.0.right/1920.-575.1080.1897/-1680.23.1680.1027/0.23.1920.1057@0.23.1920.1057" timestamp="1586809474445" />
     <state x="832" y="142" key="SettingsEditor" timestamp="1586800836602">
       <screen x="0" y="23" width="1920" height="1057" />
@@ -441,9 +446,10 @@
       <screen x="0" y="23" width="1920" height="1057" />
     </state>
     <state x="798" y="428" key="VCS.EditChangelistDialog/1920.-575.1080.1897/-1680.23.1680.1027/0.23.1920.1057@0.23.1920.1057" timestamp="1586443377793" />
-    <state x="560" y="291" key="Vcs.Push.Dialog.v2" timestamp="1586543455390">
+    <state x="560" y="291" key="Vcs.Push.Dialog.v2" timestamp="1586817752941">
       <screen x="0" y="23" width="1920" height="1057" />
     </state>
+    <state x="560" y="291" key="Vcs.Push.Dialog.v2/0.23.1920.1057/1920.-575.1080.1897/-1680.23.1680.1027@0.23.1920.1057" timestamp="1586817752941" />
     <state x="560" y="291" key="Vcs.Push.Dialog.v2/1920.-575.1080.1897/-1680.23.1680.1027/0.23.1920.1057@0.23.1920.1057" timestamp="1586543455390" />
     <state x="608" y="449" key="com.intellij.jarRepository.RepositoryAttachDialog-DOWNLOAD" timestamp="1586558769341">
       <screen x="0" y="23" width="1680" height="1027" />
@@ -497,7 +503,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/astric/server/dao/UserDAOImpl.java</url>
-          <line>126</line>
+          <line>121</line>
           <option name="timeStamp" value="22" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
@@ -507,8 +513,48 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/test/java/account/FollowDAOImplTest.java</url>
-          <line>60</line>
+          <line>56</line>
           <option name="timeStamp" value="42" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/astric/server/dao/UserDAOImpl.java</url>
+          <line>210</line>
+          <option name="timeStamp" value="46" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/astric/server/dao/FollowingDAOImpl.java</url>
+          <line>40</line>
+          <option name="timeStamp" value="47" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/astric/server/dao/FollowingDAOImpl.java</url>
+          <line>53</line>
+          <option name="timeStamp" value="48" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/test/java/follow/GetFollowingTest.java</url>
+          <line>22</line>
+          <option name="timeStamp" value="49" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/test/java/follow/GetFollowingTest.java</url>
+          <line>24</line>
+          <option name="timeStamp" value="51" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/test/java/account/FollowDAOImplTest.java</url>
+          <line>77</line>
+          <option name="timeStamp" value="52" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/astric/server/dao/FollowingDAOImpl.java</url>
+          <line>96</line>
+          <option name="timeStamp" value="53" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/test/java/account/UserDAOImplTest.java</url>
+          <line>51</line>
+          <option name="timeStamp" value="54" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
