@@ -1,11 +1,14 @@
 package astric.model.service;
 
+import astric.model.domain.Post;
 import astric.model.service.request.post.FeedRequest;
 import astric.model.service.request.post.MakePostRequest;
 import astric.model.service.request.post.StoryRequest;
 import astric.model.service.response.post.FeedResponse;
 import astric.model.service.response.post.MakePostResponse;
 import astric.model.service.response.post.StoryResponse;
+
+import java.util.List;
 
 /**
  * Defines the interface for the 'account' service.
@@ -32,4 +35,6 @@ public interface PostService {
     StoryResponse getStory(StoryRequest request);
 
     MakePostResponse enqueuePost(MakePostRequest request);
+
+    void updateFeeds(List<String> followerUsernames, Post post);
 }

@@ -2,9 +2,14 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="dd1263c4-294a-4e0e-8a6e-b617f72e087d" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/src/main/java/astric/model/dao/StoryDAO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/astric/server/dao/StoryDAOImpl.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/astric/server/lambda/post/FeedQueueProcessor.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/astric/model/service/request/post/FeedRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/astric/model/service/request/post/FeedRequest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/astric/model/dao/PostDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/astric/model/dao/PostDAO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/astric/model/service/PostService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/astric/model/service/PostService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/astric/server/dao/PostDAOImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/astric/server/dao/PostDAOImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/astric/server/service/PostServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/astric/server/service/PostServiceImpl.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/test/java/account/PostDAOImplTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/account/PostDAOImplTest.java" afterDir="false" />
     </list>
     <list id="f8d2ea07-50dd-42cb-9b15-2ba3062013f3" name="Other" comment="">
@@ -74,26 +79,39 @@
     <property name="show.migrate.to.gradle.popup" value="false" />
   </component>
   <component name="RecentsManager">
-    <key name="CreateClassDialog.RecentsKey">
-      <recent name="astric.server.dao" />
-      <recent name="astric.model.service.response" />
-      <recent name="astric.server.service" />
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src" />
     </key>
     <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
       <recent name="astric.model" />
     </key>
     <key name="CopyClassDialog.RECENTS_KEY">
-      <recent name="account" />
+      <recent name="astric.server.lambda.post" />
+      <recent name="astric.server.dao" />
       <recent name="astric.model.dao" />
+      <recent name="account" />
       <recent name="follow" />
-      <recent name="astric.model.service.response.follow" />
-      <recent name="astric.model.service.request.follow" />
     </key>
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/src" />
+    <key name="CreateClassDialog.RecentsKey">
+      <recent name="astric.server.dao" />
+      <recent name="astric.model.service.response" />
+      <recent name="astric.server.service" />
     </key>
   </component>
-  <component name="RunManager" selected="JUnit.PostDAOImplTest.testGetStoryPaginated">
+  <component name="RunManager" selected="Application.FeedQueueProcessor">
+    <configuration name="FeedQueueProcessor" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="astric.server.lambda.post.FeedQueueProcessor" />
+      <module name="astric_api" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="astric.server.lambda.post.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="PostDAOImplTest.testBatchWritePost" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="astric_api" />
       <extension name="coverage">
@@ -105,22 +123,6 @@
       <option name="PACKAGE_NAME" value="account" />
       <option name="MAIN_CLASS_NAME" value="account.PostDAOImplTest" />
       <option name="METHOD_NAME" value="testBatchWritePost" />
-      <option name="TEST_OBJECT" value="method" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="PostDAOImplTest.testGetFeedPaginated" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="astric_api" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="account.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="account" />
-      <option name="MAIN_CLASS_NAME" value="account.PostDAOImplTest" />
-      <option name="METHOD_NAME" value="testGetFeedPaginated" />
       <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
@@ -142,7 +144,7 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="PostDAOImplTest.testWritePostToFeedTable" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="PostDAOImplTest.testMakePost" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="astric_api" />
       <extension name="coverage">
         <pattern>
@@ -152,7 +154,7 @@
       </extension>
       <option name="PACKAGE_NAME" value="account" />
       <option name="MAIN_CLASS_NAME" value="account.PostDAOImplTest" />
-      <option name="METHOD_NAME" value="testWritePostToFeedTable" />
+      <option name="METHOD_NAME" value="testMakePost" />
       <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
@@ -176,11 +178,11 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Application.FeedQueueProcessor" />
+        <item itemvalue="JUnit.PostDAOImplTest.testMakePost" />
+        <item itemvalue="JUnit.PostDAOImplTest.testBatchWritePost" />
         <item itemvalue="JUnit.PostDAOImplTest.testGetStoryPaginated" />
         <item itemvalue="JUnit.PostDAOImplTest.testWritePostToStoryTable" />
-        <item itemvalue="JUnit.PostDAOImplTest.testGetFeedPaginated" />
-        <item itemvalue="JUnit.PostDAOImplTest.testWritePostToFeedTable" />
-        <item itemvalue="JUnit.PostDAOImplTest.testBatchWritePost" />
       </list>
     </recent_temporary>
   </component>
@@ -198,7 +200,7 @@
       <workItem from="1586442306585" duration="9608000" />
       <workItem from="1586458106327" duration="15740000" />
       <workItem from="1586798575114" duration="6745000" />
-      <workItem from="1586805545160" duration="23196000" />
+      <workItem from="1586805545160" duration="28376000" />
     </task>
     <task id="LOCAL-00001" summary="add auth token to loginResponse">
       <created>1585060621785</created>
@@ -368,7 +370,14 @@
       <option name="project" value="LOCAL" />
       <updated>1586877206010</updated>
     </task>
-    <option name="localTasksCounter" value="25" />
+    <task id="LOCAL-00025" summary="getStory paginated functionality">
+      <created>1586877852900</created>
+      <option name="number" value="00025" />
+      <option name="presentableId" value="LOCAL-00025" />
+      <option name="project" value="LOCAL" />
+      <updated>1586877852900</updated>
+    </task>
+    <option name="localTasksCounter" value="26" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -408,7 +417,8 @@
     <MESSAGE value="add enqueue post" />
     <MESSAGE value="writes from queue to post table" />
     <MESSAGE value="getFeed paginated functionality" />
-    <option name="LAST_COMMIT_MESSAGE" value="getFeed paginated functionality" />
+    <MESSAGE value="getStory paginated functionality" />
+    <option name="LAST_COMMIT_MESSAGE" value="getStory paginated functionality" />
   </component>
   <component name="WindowStateProjectService">
     <state x="560" y="217" key="#Auto_Import" timestamp="1586536637279">
@@ -419,10 +429,10 @@
       <screen x="0" y="23" width="1920" height="1057" />
     </state>
     <state x="781" y="170" key="#Plugins/1920.-575.1080.1897/-1680.23.1680.1027/0.23.1920.1057@0.23.1920.1057" timestamp="1586458275554" />
-    <state x="773" y="242" key="#com.intellij.ide.util.MemberChooser" timestamp="1586871842051">
+    <state x="773" y="242" key="#com.intellij.ide.util.MemberChooser" timestamp="1586882761649">
       <screen x="0" y="23" width="1920" height="1057" />
     </state>
-    <state x="773" y="242" key="#com.intellij.ide.util.MemberChooser/0.23.1920.1057/1920.-575.1080.1897/-1680.23.1680.1027@0.23.1920.1057" timestamp="1586871842051" />
+    <state x="773" y="242" key="#com.intellij.ide.util.MemberChooser/0.23.1920.1057/1920.-575.1080.1897/-1680.23.1680.1027@0.23.1920.1057" timestamp="1586882761649" />
     <state x="773" y="242" key="#com.intellij.ide.util.MemberChooser/1920.-575.1080.1897/-1680.23.1680.1027/0.23.1920.1057@0.23.1920.1057" timestamp="1586798940814" />
     <state x="698" y="342" key="#com.intellij.ide.util.TreeClassChooserDialog" timestamp="1586450274851">
       <screen x="0" y="23" width="1920" height="1057" />
@@ -432,46 +442,47 @@
       <screen x="0" y="23" width="1920" height="1057" />
     </state>
     <state x="698" y="305" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/1920.-575.1080.1897/-1680.23.1680.1027/0.23.1920.1057@0.23.1920.1057" timestamp="1586453721239" />
-    <state x="605" y="319" key="#xdebugger.evaluate" timestamp="1586809354947">
+    <state x="1065" y="460" key="#xdebugger.evaluate" timestamp="1586882646214">
       <screen x="0" y="23" width="1920" height="1057" />
     </state>
+    <state x="1065" y="460" key="#xdebugger.evaluate/0.23.1920.1057/1920.-575.1080.1897/-1680.23.1680.1027@0.23.1920.1057" timestamp="1586882646214" />
     <state x="605" y="319" key="#xdebugger.evaluate/1920.-575.1080.1897/-1680.23.1680.1027/0.23.1920.1057@0.23.1920.1057" timestamp="1586809354947" />
     <state x="690" y="405" key="ANALYSIS_DLG_com.intellij.analysis.BaseAnalysisAction$1" timestamp="1586453317190">
       <screen x="0" y="23" width="1920" height="1057" />
     </state>
     <state x="690" y="405" key="ANALYSIS_DLG_com.intellij.analysis.BaseAnalysisAction$1/1920.-575.1080.1897/-1680.23.1680.1027/0.23.1920.1057@0.23.1920.1057" timestamp="1586453317190" />
-    <state x="571" y="154" key="CommitChangelistDialog2" timestamp="1586877205841">
+    <state x="571" y="154" key="CommitChangelistDialog2" timestamp="1586877852704">
       <screen x="0" y="23" width="1920" height="1057" />
     </state>
-    <state x="571" y="154" key="CommitChangelistDialog2/0.23.1920.1057/1920.-575.1080.1897/-1680.23.1680.1027@0.23.1920.1057" timestamp="1586877205841" />
+    <state x="571" y="154" key="CommitChangelistDialog2/0.23.1920.1057/1920.-575.1080.1897/-1680.23.1680.1027@0.23.1920.1057" timestamp="1586877852704" />
     <state x="571" y="154" key="CommitChangelistDialog2/1920.-575.1080.1897/-1680.23.1680.1027/0.23.1920.1057@0.23.1920.1057" timestamp="1586543453486" />
     <state width="652" height="466" key="DebuggerActiveHint" timestamp="1586811596318">
       <screen x="0" y="23" width="1680" height="1027" />
     </state>
     <state width="652" height="466" key="DebuggerActiveHint/0.23.1680.1027@0.23.1680.1027" timestamp="1586811596318" />
-    <state width="1878" height="377" key="GridCell.Tab.0.bottom" timestamp="1586877655143">
+    <state width="1878" height="276" key="GridCell.Tab.0.bottom" timestamp="1586883396579">
       <screen x="0" y="23" width="1920" height="1057" />
     </state>
     <state width="1638" height="493" key="GridCell.Tab.0.bottom/0.23.1680.1027@0.23.1680.1027" timestamp="1586814250763" />
-    <state width="1878" height="377" key="GridCell.Tab.0.bottom/0.23.1920.1057/1920.-575.1080.1897/-1680.23.1680.1027@0.23.1920.1057" timestamp="1586877655143" />
+    <state width="1878" height="276" key="GridCell.Tab.0.bottom/0.23.1920.1057/1920.-575.1080.1897/-1680.23.1680.1027@0.23.1920.1057" timestamp="1586883396579" />
     <state width="1878" height="357" key="GridCell.Tab.0.bottom/1920.-575.1080.1897/-1680.23.1680.1027/0.23.1920.1057@0.23.1920.1057" timestamp="1586809474366" />
-    <state width="1878" height="377" key="GridCell.Tab.0.center" timestamp="1586877655142">
+    <state width="1878" height="276" key="GridCell.Tab.0.center" timestamp="1586883396579">
       <screen x="0" y="23" width="1920" height="1057" />
     </state>
     <state width="1638" height="493" key="GridCell.Tab.0.center/0.23.1680.1027@0.23.1680.1027" timestamp="1586814250761" />
-    <state width="1878" height="377" key="GridCell.Tab.0.center/0.23.1920.1057/1920.-575.1080.1897/-1680.23.1680.1027@0.23.1920.1057" timestamp="1586877655142" />
+    <state width="1878" height="276" key="GridCell.Tab.0.center/0.23.1920.1057/1920.-575.1080.1897/-1680.23.1680.1027@0.23.1920.1057" timestamp="1586883396579" />
     <state width="1878" height="357" key="GridCell.Tab.0.center/1920.-575.1080.1897/-1680.23.1680.1027/0.23.1920.1057@0.23.1920.1057" timestamp="1586809474365" />
-    <state width="1878" height="377" key="GridCell.Tab.0.left" timestamp="1586877655141">
+    <state width="1878" height="276" key="GridCell.Tab.0.left" timestamp="1586883396578">
       <screen x="0" y="23" width="1920" height="1057" />
     </state>
     <state width="1638" height="493" key="GridCell.Tab.0.left/0.23.1680.1027@0.23.1680.1027" timestamp="1586814250760" />
-    <state width="1878" height="377" key="GridCell.Tab.0.left/0.23.1920.1057/1920.-575.1080.1897/-1680.23.1680.1027@0.23.1920.1057" timestamp="1586877655141" />
+    <state width="1878" height="276" key="GridCell.Tab.0.left/0.23.1920.1057/1920.-575.1080.1897/-1680.23.1680.1027@0.23.1920.1057" timestamp="1586883396578" />
     <state width="1878" height="357" key="GridCell.Tab.0.left/1920.-575.1080.1897/-1680.23.1680.1027/0.23.1920.1057@0.23.1920.1057" timestamp="1586809474364" />
-    <state width="1878" height="377" key="GridCell.Tab.0.right" timestamp="1586877655143">
+    <state width="1878" height="276" key="GridCell.Tab.0.right" timestamp="1586883396579">
       <screen x="0" y="23" width="1920" height="1057" />
     </state>
     <state width="1638" height="493" key="GridCell.Tab.0.right/0.23.1680.1027@0.23.1680.1027" timestamp="1586814250762" />
-    <state width="1878" height="377" key="GridCell.Tab.0.right/0.23.1920.1057/1920.-575.1080.1897/-1680.23.1680.1027@0.23.1920.1057" timestamp="1586877655143" />
+    <state width="1878" height="276" key="GridCell.Tab.0.right/0.23.1920.1057/1920.-575.1080.1897/-1680.23.1680.1027@0.23.1920.1057" timestamp="1586883396579" />
     <state width="1878" height="357" key="GridCell.Tab.0.right/1920.-575.1080.1897/-1680.23.1680.1027/0.23.1920.1057@0.23.1920.1057" timestamp="1586809474445" />
     <state x="832" y="142" key="SettingsEditor" timestamp="1586800836602">
       <screen x="0" y="23" width="1920" height="1057" />
@@ -486,10 +497,10 @@
       <screen x="0" y="23" width="1920" height="1057" />
     </state>
     <state x="798" y="428" key="VCS.EditChangelistDialog/1920.-575.1080.1897/-1680.23.1680.1027/0.23.1920.1057@0.23.1920.1057" timestamp="1586443377793" />
-    <state x="560" y="291" key="Vcs.Push.Dialog.v2" timestamp="1586877207433">
+    <state x="560" y="291" key="Vcs.Push.Dialog.v2" timestamp="1586877854235">
       <screen x="0" y="23" width="1920" height="1057" />
     </state>
-    <state x="560" y="291" key="Vcs.Push.Dialog.v2/0.23.1920.1057/1920.-575.1080.1897/-1680.23.1680.1027@0.23.1920.1057" timestamp="1586877207433" />
+    <state x="560" y="291" key="Vcs.Push.Dialog.v2/0.23.1920.1057/1920.-575.1080.1897/-1680.23.1680.1027@0.23.1920.1057" timestamp="1586877854235" />
     <state x="560" y="291" key="Vcs.Push.Dialog.v2/1920.-575.1080.1897/-1680.23.1680.1027/0.23.1920.1057@0.23.1920.1057" timestamp="1586543455390" />
     <state x="608" y="449" key="com.intellij.jarRepository.RepositoryAttachDialog-DOWNLOAD" timestamp="1586558769341">
       <screen x="0" y="23" width="1680" height="1027" />
@@ -511,6 +522,22 @@
       <screen x="1920" y="-575" width="1080" height="1897" />
     </state>
     <state x="1917" y="-561" width="1091" height="1879" maximized="true" key="dock-window-3/0.23.1920.1057/1920.-575.1080.1897/-1680.23.1680.1027@0.23.1920.1057" timestamp="1586877616055" />
+    <state x="1913" y="-545" width="1104" height="1859" maximized="true" key="dock-window-4" timestamp="1586879279100">
+      <screen x="1920" y="-575" width="1080" height="1897" />
+    </state>
+    <state x="1913" y="-545" width="1104" height="1859" maximized="true" key="dock-window-4/0.23.1920.1057/1920.-575.1080.1897/-1680.23.1680.1027@0.23.1920.1057" timestamp="1586879279100" />
+    <state x="86" y="108" width="1720" height="857" key="dock-window-5" timestamp="1586880874150">
+      <screen x="0" y="23" width="1920" height="1057" />
+    </state>
+    <state x="86" y="108" width="1720" height="857" key="dock-window-5/0.23.1920.1057/1920.-575.1080.1897/-1680.23.1680.1027@0.23.1920.1057" timestamp="1586880874150" />
+    <state x="1924" y="-549" width="1101" height="1864" maximized="true" key="dock-window-6" timestamp="1586880874150">
+      <screen x="1920" y="-575" width="1080" height="1897" />
+    </state>
+    <state x="1924" y="-549" width="1101" height="1864" maximized="true" key="dock-window-6/0.23.1920.1057/1920.-575.1080.1897/-1680.23.1680.1027@0.23.1920.1057" timestamp="1586880874150" />
+    <state x="100" y="123" width="1720" height="857" key="dock-window-7" timestamp="1586881528295">
+      <screen x="0" y="23" width="1920" height="1057" />
+    </state>
+    <state x="100" y="123" width="1720" height="857" key="dock-window-7/0.23.1920.1057/1920.-575.1080.1897/-1680.23.1680.1027@0.23.1920.1057" timestamp="1586881528295" />
     <state x="698" y="322" key="extract.method.dialog" timestamp="1586535193634">
       <screen x="0" y="23" width="1920" height="1057" />
     </state>
@@ -524,10 +551,11 @@
     </state>
     <state x="70" y="143" key="new project wizard/0.23.1680.1027@0.23.1680.1027" timestamp="1586557538744" />
     <state x="1920" y="253" key="new project wizard/1920.-575.1080.1897/-1680.23.1680.1027/0.23.1920.1057@1920.-575.1080.1897" timestamp="1586273102818" />
-    <state x="518" y="249" width="670" height="657" key="search.everywhere.popup" timestamp="1586811641777">
-      <screen x="0" y="23" width="1680" height="1027" />
+    <state x="592" y="256" width="766" height="677" key="search.everywhere.popup" timestamp="1586878732019">
+      <screen x="0" y="23" width="1920" height="1057" />
     </state>
     <state x="518" y="249" width="670" height="657" key="search.everywhere.popup/0.23.1680.1027@0.23.1680.1027" timestamp="1586811641777" />
+    <state x="592" y="256" width="766" height="677" key="search.everywhere.popup/0.23.1920.1057/1920.-575.1080.1897/-1680.23.1680.1027@0.23.1920.1057" timestamp="1586878732019" />
     <state x="592" y="256" width="670" height="676" key="search.everywhere.popup/1920.-575.1080.1897/-1680.23.1680.1027/0.23.1920.1057@0.23.1920.1057" timestamp="1586458211981" />
   </component>
   <component name="XDebuggerManager">
@@ -610,12 +638,12 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/test/java/account/PostDAOImplTest.java</url>
-          <line>100</line>
+          <line>105</line>
           <option name="timeStamp" value="57" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/astric/server/dao/PostDAOImpl.java</url>
-          <line>143</line>
+          <line>177</line>
           <option name="timeStamp" value="58" />
         </line-breakpoint>
       </breakpoints>

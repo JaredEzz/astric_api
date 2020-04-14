@@ -26,9 +26,6 @@ import com.google.gson.Gson;
 
 import java.lang.reflect.Array;
 import java.util.*;
-import java.util.stream.Collectors;
-
-import static astric.server.dao.UserDAOImpl.hardCodedUsers;
 
 public class PostDAOImpl implements PostDAO {
 
@@ -38,6 +35,8 @@ public class PostDAOImpl implements PostDAO {
     Table storyTable;
     UserDAOImpl userDAO;
     FollowingDAOImpl followingDAO;
+    Gson gson;
+    AmazonSQS sqs;
 
     public PostDAOImpl() {
         this.client = AmazonDynamoDBClientBuilder.standard().withRegion(Regions.US_WEST_2).build();
@@ -46,6 +45,10 @@ public class PostDAOImpl implements PostDAO {
         this.storyTable = dynamoDB.getTable("Story");
         this.userDAO = new UserDAOImpl();
         this.followingDAO = new FollowingDAOImpl();
+        this.gson = new Gson();
+        this.sqs = AmazonSQSClientBuilder.standard()
+                .withRegion(Regions.US_WEST_2)
+                .build();
     }
 
     @Override
@@ -53,13 +56,45 @@ public class PostDAOImpl implements PostDAO {
         Post post = request.getPost();
         String originatingUsername = post.getOriginatingUser().getUsername();
 
-        //TODO might need to paginate batch-writing the posts, if batchWriteItemUnprocessed doesn't get it
-        List<String> allFollowers = followingDAO.getAllFollowerUsernames(originatingUsername);
+        //get followers paginated, send post and follower usernames as a message to another sqs queue
+        boolean hasMoreFollowers = true;
+        String lastFollower = null;
+        List<String> followers;
+        while (hasMoreFollowers) {
+            Map<String, Object> result = followingDAO.getAllFollowersPaginated(originatingUsername, 25, lastFollower);
+            System.out.println(result);
+            hasMoreFollowers = (boolean) result.get("hasMorePages");
+            followers = (List<String>) result.get("followersList");
+            if (hasMoreFollowers) {
+                lastFollower = followers.get(followers.size() - 1);
+            }
+            //queue handler will batchWrite the post to the feed table
+            enqueueFeedUpdate(followers, post);
+        }
 
-        batchWritePostToFeedTable(post, allFollowers);
-        writePostToStoryTable(post, originatingUsername);
+
+//        List<String> allFollowers = followingDAO.getAllFollowerUsernames(originatingUsername);
+
+//        batchWritePostToFeedTable(post, allFollowers);
+//        writePostToStoryTable(post, originatingUsername);
 
         return new MakePostResponse(true);
+    }
+
+    public void enqueueFeedUpdate(List<String> followerUsernames, Post post) {
+        if (!followerUsernames.isEmpty()) {
+            String updateFeedQueueUrl = "https://sqs.us-west-2.amazonaws.com/765610589252/updateFeedQueue";
+            Map<String, String> messageBody = new HashMap<>();
+            messageBody.put("followerUsernames", gson.toJson(followerUsernames));
+            messageBody.put("post", gson.toJson(post));
+            SendMessageRequest send_msg_request = new SendMessageRequest()
+                    .withQueueUrl(updateFeedQueueUrl)
+                    .withMessageBody(gson.toJson(messageBody))
+                    .withDelaySeconds(1);
+            SendMessageResult send_msg_result = sqs.sendMessage(send_msg_request);
+            String msgId = send_msg_result.getMessageId();
+            System.out.println("Message ID: " + msgId);
+        }
     }
 
     public void batchWritePostToFeedTable(Post post, List<String> feedOwnerUsernames) {
@@ -69,8 +104,8 @@ public class PostDAOImpl implements PostDAO {
             itemsToPut.add(new Item()
                     .withPrimaryKey("username", username)
                     .withString("timestamp", post.getTimestamp())
-                    .withMap("originatingUser",post.getOriginatingUser().toMap())
-                    .withString("message",post.getMessage()))
+                    .withMap("originatingUser", post.getOriginatingUser().toMap())
+                    .withString("message", post.getMessage()))
             ;
         }
 
@@ -89,8 +124,7 @@ public class PostDAOImpl implements PostDAO {
 
                 if (outcome.getUnprocessedItems().size() == 0) {
                     System.out.println("No unprocessed items found");
-                }
-                else {
+                } else {
                     System.out.println("Retrieving the unprocessed items");
                     outcome = dynamoDB.batchWriteItemUnprocessed(unprocessedItems);
                 }
@@ -107,8 +141,8 @@ public class PostDAOImpl implements PostDAO {
                     new Item()
                             .withPrimaryKey("username", feedOwnerUsername)
                             .withString("timestamp", post.getTimestamp())
-                    .withMap("originatingUser",post.getOriginatingUser().toMap())
-                    .withString("message",post.getMessage())
+                            .withMap("originatingUser", post.getOriginatingUser().toMap())
+                            .withString("message", post.getMessage())
             );
         } catch (Exception e) {
             e.printStackTrace();
@@ -121,8 +155,8 @@ public class PostDAOImpl implements PostDAO {
                     new Item()
                             .withPrimaryKey("username", originatingUsername)
                             .withString("timestamp", post.getTimestamp())
-                            .withMap("originatingUser",post.getOriginatingUser().toMap())
-                            .withString("message",post.getMessage())
+                            .withMap("originatingUser", post.getOriginatingUser().toMap())
+                            .withString("message", post.getMessage())
             );
         } catch (Exception e) {
             e.printStackTrace();
@@ -143,7 +177,7 @@ public class PostDAOImpl implements PostDAO {
         Item item;
         Map<String, AttributeValue> lastEvaluatedKey = null;
         List<Post> feedPosts = new ArrayList<>();
-        try{
+        try {
             QuerySpec spec = (lastPost == null) ? new QuerySpec()
                     .withKeyConditionExpression("#u = :v_u")
                     .withNameMap(new NameMap().with("#u", "username"))
@@ -201,7 +235,7 @@ public class PostDAOImpl implements PostDAO {
         Item item;
         Map<String, AttributeValue> lastEvaluatedKey = null;
         List<Post> storyPosts = new ArrayList<>();
-        try{
+        try {
             QuerySpec spec = (lastPost == null) ? new QuerySpec()
                     .withKeyConditionExpression("#u = :v_u")
                     .withNameMap(new NameMap().with("#u", "username"))
@@ -248,35 +282,14 @@ public class PostDAOImpl implements PostDAO {
     @Override
     public MakePostResponse enqueuePost(MakePostRequest request) {
         String queueUrl = "https://sqs.us-west-2.amazonaws.com/765610589252/astric";
-        Gson gson = new Gson();
         String requestJson = gson.toJson(request);
         SendMessageRequest send_msg_request = new SendMessageRequest()
                 .withQueueUrl(queueUrl)
                 .withMessageBody(requestJson)
                 .withDelaySeconds(1);
-        AmazonSQS sqs = AmazonSQSClientBuilder.standard()
-                .withRegion(Regions.US_WEST_2)
-                .build();
         SendMessageResult send_msg_result = sqs.sendMessage(send_msg_request);
         String msgId = send_msg_result.getMessageId();
         System.out.println("Message ID: " + msgId);
         return new MakePostResponse(true, "Post successfully enqueued.");
     }
-
-
-//    private int getFeedStartingIndex(Post lastPost, List<Post> allPosts){
-//        int feedIndex = 0;
-//        if (lastPost != null) {
-//            // This is a paged request for something after the first page. Find the first item
-//            // we should return
-//            for (int i = 0; i < allPosts.size(); i++) {
-//                if(lastPost.equals(allPosts.get(i))) {
-//                    // We found the index of the last item returned last time. Increment to get
-//                    // to the first one we should return
-//                    feedIndex = i + 1;
-//                }
-//            }
-//        }
-//        return feedIndex;
-//    }
 }
