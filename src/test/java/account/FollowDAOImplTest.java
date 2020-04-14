@@ -15,6 +15,7 @@
 //import java.util.List;
 //import java.util.Map;
 //
+//import static org.junit.jupiter.api.Assertions.assertNotNull;
 //import static org.junit.jupiter.api.Assertions.assertTrue;
 //
 //public class FollowDAOImplTest {
@@ -76,5 +77,12 @@
 //        FollowersRequest request = new FollowersRequest("jaredhasson",10,null, "34ea206c-2fb1-4e55-b501-d860060fa6bc");
 //        FollowersResponse response = followingDAO.getFollowers(request);
 //        System.out.println(response.toString());
+//    }
+//
+//    @Test
+//    public void testGetAllFollowers(){
+//        String postOriginatingUsername = "jaredhasson";
+//        List<String> followerUsernames = followingDAO.getAllFollowerUsernames(postOriginatingUsername);
+//        assertNotNull(followerUsernames);
 //    }
 //}

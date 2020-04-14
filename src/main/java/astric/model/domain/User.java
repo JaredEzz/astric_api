@@ -1,5 +1,7 @@
 package astric.model.domain;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 
 /**
@@ -70,5 +72,14 @@ public class User implements Comparable<User> {
     @Override
     public int compareTo(User user) {
         return this.getAlias().compareTo(user.getAlias());
+    }
+
+    public Map<String, Object> toMap() {
+        return new HashMap<String, Object>(){{
+            this.put("username", username);
+            this.put("name", name);
+            this.put("handle", alias);
+            this.put("imageUrl", imageUrl);
+        }};
     }
 }

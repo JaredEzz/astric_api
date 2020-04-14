@@ -29,5 +29,11 @@ public class PostServiceImpl implements PostService {
         return dao.getStory(request);
     }
 
+    @Override
+    public MakePostResponse enqueuePost(MakePostRequest request) {
+        PostDAO dao = new PostDAOImpl();
+        return dao.enqueuePost(request);
+    }
+
 
 }

@@ -1,5 +1,8 @@
 package astric.model.domain;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class Post {
     private User originatingUser;
     private String timestamp;
@@ -42,5 +45,13 @@ public class Post {
         if (this == obj) return true;
         Post comparePost = (Post) obj;
         return comparePost.timestamp.equals(this.timestamp) && comparePost.message.equals(this.message);
+    }
+
+    public Map<String, Object> toMap() {
+        return new HashMap<String, Object>(){{
+            this.put("originatingUser", originatingUser.toMap());
+            this.put("timestamp", timestamp);
+            this.put("message", message);
+        }};
     }
 }

@@ -50,6 +50,50 @@ public class FollowingDAOImpl implements FollowingDAO {
         return new FollowingResponse(responseFollowees, hasMorePages);
     }
 
+//    public void getAllFollowing(String followerUsername) {
+//        Item item;
+//        try {
+//            QuerySpec spec = new QuerySpec()
+//                    .withKeyConditionExpression("#fr = :v_fr")
+//                    .withNameMap(new NameMap().with("#fr", "follower"))
+//                    .withValueMap(new ValueMap().withString(":v_fr", followerUsername))
+//                    .withScanIndexForward(false);
+//            ItemCollection<QueryOutcome> outcome = table.query(spec);
+//            if (outcome != null) {
+//                for (Item value : outcome) {
+//                    item = value;
+//                    System.out.println(item.get("followee"));
+//                }
+//            }
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//    }
+
+    public List<String> getAllFollowerUsernames(String followeeUsername) {
+        List<String> result = new ArrayList<>();
+        Index index = table.getIndex("followee-index");
+        Item item;
+        try{
+            QuerySpec spec = new QuerySpec()
+                    .withKeyConditionExpression("#fe = :v_fe")
+                    .withNameMap(new NameMap().with("#fe", "followee"))
+                    .withValueMap(new ValueMap().withString(":v_fe", followeeUsername))
+                    .withScanIndexForward(true);
+            ItemCollection<QueryOutcome> outcome = index.query(spec);
+            if (outcome != null) {
+                for (Item value : outcome) {
+                    item = value;
+                    result.add((String) item.get("follower"));
+//                    System.out.println(item.get("follower"));
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return result;
+    }
+
     public Map<String, Object> getAllFollowingPaginated(String followerUsername, int pageSize, String lastFollowee) {
         Item item;
         Map<String, AttributeValue> lastEvaluatedKey = null;

@@ -8,15 +8,43 @@ import astric.model.service.request.post.StoryRequest;
 import astric.model.service.response.post.FeedResponse;
 import astric.model.service.response.post.MakePostResponse;
 import astric.model.service.response.post.StoryResponse;
+import com.amazonaws.regions.Regions;
+import com.amazonaws.services.dynamodbv2.AmazonDynamoDB;
+import com.amazonaws.services.dynamodbv2.AmazonDynamoDBClientBuilder;
+import com.amazonaws.services.dynamodbv2.document.DynamoDB;
+import com.amazonaws.services.dynamodbv2.document.Item;
+import com.amazonaws.services.dynamodbv2.document.PutItemOutcome;
+import com.amazonaws.services.dynamodbv2.document.Table;
+import com.amazonaws.services.sqs.AmazonSQS;
+import com.amazonaws.services.sqs.AmazonSQSClientBuilder;
+import com.amazonaws.services.sqs.model.SendMessageRequest;
+import com.amazonaws.services.sqs.model.SendMessageResult;
+import com.google.gson.Gson;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 import java.util.stream.Collectors;
 
 import static astric.server.dao.UserDAOImpl.hardCodedUsers;
 
 public class PostDAOImpl implements PostDAO {
+
+    AmazonDynamoDB client;
+    DynamoDB dynamoDB;
+    Table feedTable;
+    UserDAOImpl userDAO;
+    FollowingDAOImpl followingDAO;
+
+    public PostDAOImpl() {
+        this.client = AmazonDynamoDBClientBuilder.standard().withRegion(Regions.US_WEST_2).build();
+        this.dynamoDB = new DynamoDB(client);
+        this.feedTable = dynamoDB.getTable("Feed");
+        this.userDAO = new UserDAOImpl();
+        this.followingDAO = new FollowingDAOImpl();
+    }
+
     private List<Post> postList = new ArrayList<>();
 
 
@@ -34,9 +62,35 @@ public class PostDAOImpl implements PostDAO {
     @Override
     public MakePostResponse makePost(MakePostRequest request) {
         Post post = request.getPost();
-        postList.add(post);
+        String originatingUsername = post.getOriginatingUser().getUsername();
+
+        //currently just gets one, we'll want all followers when we do a batch write
+        String feedOwnerUsername =
+                (String) ((List)
+                        followingDAO.getAllFollowersPaginated(
+                                originatingUsername,
+                                1,
+                                "Alene").get("followersList")).get(0);
+
+        List<String> allFollowers = followingDAO.getAllFollowerUsernames(originatingUsername);
+
+        writePostToFeedTable(post, feedOwnerUsername);
 
         return new MakePostResponse(true);
+    }
+
+    public void writePostToFeedTable(Post post, String feedOwnerUsername) {
+        try {
+            PutItemOutcome outcome = feedTable.putItem(
+                    new Item()
+                            .withPrimaryKey("username", feedOwnerUsername)
+                            .withString("timestamp", post.getTimestamp())
+                    .withMap("originatingUser",post.getOriginatingUser().toMap())
+                    .withString("message",post.getMessage())
+            );
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
@@ -92,6 +146,24 @@ public class PostDAOImpl implements PostDAO {
         }
 
         return new StoryResponse(responsePosts, hasMorePages);
+    }
+
+    @Override
+    public MakePostResponse enqueuePost(MakePostRequest request) {
+        String queueUrl = "https://sqs.us-west-2.amazonaws.com/765610589252/astric";
+        Gson gson = new Gson();
+        String requestJson = gson.toJson(request);
+        SendMessageRequest send_msg_request = new SendMessageRequest()
+                .withQueueUrl(queueUrl)
+                .withMessageBody(requestJson)
+                .withDelaySeconds(1);
+        AmazonSQS sqs = AmazonSQSClientBuilder.standard()
+                .withRegion(Regions.US_WEST_2)
+                .build();
+        SendMessageResult send_msg_result = sqs.sendMessage(send_msg_request);
+        String msgId = send_msg_result.getMessageId();
+        System.out.println("Message ID: " + msgId);
+        return new MakePostResponse(true, "Post successfully enqueued.");
     }
 
     private int getFeedStartingIndex(Post lastPost, List<Post> allPosts){

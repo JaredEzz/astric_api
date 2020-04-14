@@ -13,4 +13,6 @@ public interface PostDAO {
     FeedResponse getFeed(FeedRequest request);
 
     StoryResponse getStory(StoryRequest request);
+
+    MakePostResponse enqueuePost(MakePostRequest request);
 }

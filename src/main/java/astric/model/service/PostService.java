@@ -30,4 +30,6 @@ public interface PostService {
     FeedResponse getFeed(FeedRequest request);
 
     StoryResponse getStory(StoryRequest request);
+
+    MakePostResponse enqueuePost(MakePostRequest request);
 }
