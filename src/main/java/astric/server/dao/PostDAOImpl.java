@@ -2,6 +2,7 @@ package astric.server.dao;
 
 import astric.model.dao.PostDAO;
 import astric.model.domain.Post;
+import astric.model.domain.User;
 import astric.model.service.request.post.FeedRequest;
 import astric.model.service.request.post.MakePostRequest;
 import astric.model.service.request.post.StoryRequest;
@@ -11,19 +12,20 @@ import astric.model.service.response.post.StoryResponse;
 import com.amazonaws.regions.Regions;
 import com.amazonaws.services.dynamodbv2.AmazonDynamoDB;
 import com.amazonaws.services.dynamodbv2.AmazonDynamoDBClientBuilder;
-import com.amazonaws.services.dynamodbv2.document.DynamoDB;
-import com.amazonaws.services.dynamodbv2.document.Item;
-import com.amazonaws.services.dynamodbv2.document.PutItemOutcome;
-import com.amazonaws.services.dynamodbv2.document.Table;
+import com.amazonaws.services.dynamodbv2.document.*;
+import com.amazonaws.services.dynamodbv2.document.spec.QuerySpec;
+import com.amazonaws.services.dynamodbv2.document.utils.NameMap;
+import com.amazonaws.services.dynamodbv2.document.utils.ValueMap;
+import com.amazonaws.services.dynamodbv2.model.AttributeValue;
+import com.amazonaws.services.dynamodbv2.model.WriteRequest;
 import com.amazonaws.services.sqs.AmazonSQS;
 import com.amazonaws.services.sqs.AmazonSQSClientBuilder;
 import com.amazonaws.services.sqs.model.SendMessageRequest;
 import com.amazonaws.services.sqs.model.SendMessageResult;
 import com.google.gson.Gson;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.lang.reflect.Array;
+import java.util.*;
 import java.util.stream.Collectors;
 
 import static astric.server.dao.UserDAOImpl.hardCodedUsers;
@@ -44,38 +46,56 @@ public class PostDAOImpl implements PostDAO {
         this.followingDAO = new FollowingDAOImpl();
     }
 
-    private List<Post> postList = new ArrayList<>();
-
-
-    private List<Post> hardCodedPosts = Arrays.asList(
-            new Post(hardCodedUsers.get(0), "20121002", "This is a good website https://google.com @tb @birdlover"),
-            new Post(hardCodedUsers.get(0), "20121002", "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate"),
-            new Post(hardCodedUsers.get(1), "20121002", "Tweet 3"),
-            new Post(hardCodedUsers.get(2), "20121002", "Tweet 4"),
-            new Post(hardCodedUsers.get(3), "20121002", "Tweet 5"),
-            new Post(hardCodedUsers.get(4), "20121002", "Tweet 7"),
-            new Post(hardCodedUsers.get(1), "20121002", "Tweet 6"),
-            new Post(hardCodedUsers.get(5), "20121002", "I love to go backpacking")
-    );
-
     @Override
     public MakePostResponse makePost(MakePostRequest request) {
         Post post = request.getPost();
         String originatingUsername = post.getOriginatingUser().getUsername();
 
-        //currently just gets one, we'll want all followers when we do a batch write
-        String feedOwnerUsername =
-                (String) ((List)
-                        followingDAO.getAllFollowersPaginated(
-                                originatingUsername,
-                                1,
-                                "Alene").get("followersList")).get(0);
-
+        //TODO might need to paginate batch-writing the posts, if batchWriteItemUnprocessed doesn't get it
         List<String> allFollowers = followingDAO.getAllFollowerUsernames(originatingUsername);
 
-        writePostToFeedTable(post, feedOwnerUsername);
+        batchWritePostToFeedTable(post, allFollowers);
 
         return new MakePostResponse(true);
+    }
+
+    public void batchWritePostToFeedTable(Post post, List<String> feedOwnerUsernames) {
+        List<Item> itemsToPut = new ArrayList<>();
+
+        for (String username : feedOwnerUsernames) {
+            itemsToPut.add(new Item()
+                    .withPrimaryKey("username", username)
+                    .withString("timestamp", post.getTimestamp())
+                    .withMap("originatingUser",post.getOriginatingUser().toMap())
+                    .withString("message",post.getMessage()))
+            ;
+        }
+
+        try {
+            TableWriteItems feedTableWriteItems = new TableWriteItems(feedTable.getTableName())
+                    .withItemsToPut(itemsToPut);
+
+            System.out.println("Making the request.");
+            BatchWriteItemOutcome outcome = dynamoDB.batchWriteItem(feedTableWriteItems);
+            do {
+
+                // Check for unprocessed keys which could happen if you exceed
+                // provisioned throughput
+
+                Map<String, List<WriteRequest>> unprocessedItems = outcome.getUnprocessedItems();
+
+                if (outcome.getUnprocessedItems().size() == 0) {
+                    System.out.println("No unprocessed items found");
+                }
+                else {
+                    System.out.println("Retrieving the unprocessed items");
+                    outcome = dynamoDB.batchWriteItemUnprocessed(unprocessedItems);
+                }
+
+            } while (outcome.getUnprocessedItems().size() > 0);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     public void writePostToFeedTable(Post post, String feedOwnerUsername) {
@@ -96,26 +116,58 @@ public class PostDAOImpl implements PostDAO {
     public FeedResponse getFeed(FeedRequest request) {
         assert request.getLimit() > 0;
         assert request.getUsername() != null;
-
-        //make a list of the posts to return based on if the user is
-        //following the originating user or is the originating user
-
-        List<Post> allPosts = hardCodedPosts; //TODO filter hardcoded posts by user/follower
-        List<Post> responsePosts = new ArrayList<>(request.getLimit());
-
-        boolean hasMorePages = false;
-
-        if (request.getLimit() > 0) {
-            int feedIndex = getFeedStartingIndex(request.getLastPost(), allPosts);
-
-            for (int limitCounter = 0; feedIndex < allPosts.size() && limitCounter < request.getLimit(); feedIndex++, limitCounter++) {
-                responsePosts.add(allPosts.get(feedIndex));
-            }
-
-            hasMorePages = feedIndex < allPosts.size();
-        }
-
+        Map<String, Object> result = getFeedPaginated(request.getUsername(), request.getLimit(), request.getLastPost());
+        List<Post> responsePosts = (ArrayList<Post>) result.get("feedPostList");
+        boolean hasMorePages = (boolean) result.get("hasMorePages");
         return new FeedResponse(responsePosts, hasMorePages);
+    }
+
+    public Map<String, Object> getFeedPaginated(String username, int limit, Post lastPost) {
+        Item item;
+        Map<String, AttributeValue> lastEvaluatedKey = null;
+        List<Post> feedPosts = new ArrayList<>();
+        try{
+            QuerySpec spec = (lastPost == null) ? new QuerySpec()
+                    .withKeyConditionExpression("#u = :v_u")
+                    .withNameMap(new NameMap().with("#u", "username"))
+                    .withValueMap(new ValueMap().withString(":v_u", username))
+                    .withScanIndexForward(true)
+                    .withMaxResultSize(limit) :
+                    new QuerySpec()
+                            .withKeyConditionExpression("#u = :v_u")
+                            .withNameMap(new NameMap().with("#u", "username"))
+                            .withValueMap(new ValueMap().withString(":v_u", username))
+                            .withScanIndexForward(true)
+                            .withMaxResultSize(limit)
+                            .withExclusiveStartKey("username", username, "timestamp", lastPost.getTimestamp());
+            ItemCollection<QueryOutcome> outcome = feedTable.query(spec);
+            if (outcome != null) {
+                for (Item value : outcome) {
+                    item = value;
+                    lastEvaluatedKey = outcome.getLastLowLevelResult().getQueryResult().getLastEvaluatedKey();
+                    Map<String, String> userMap = (Map<String, String>) item.get("originatingUser");
+                    Post post = new Post(
+                            new User(
+                                    userMap.get("name"),
+                                    userMap.get("handle"),
+                                    userMap.get("imageUrl"),
+                                    userMap.get("username")
+                            ),
+                            (String) item.get("timestamp"),
+                            (String) item.get("message")
+                    );
+                    feedPosts.add(post);
+                    System.out.println(post.toMap());
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        boolean hasMorePages = lastEvaluatedKey != null;
+        Map<String, Object> result = new HashMap<>();
+        result.put("feedPostList", feedPosts);
+        result.put("hasMorePages", hasMorePages);
+        return result;
     }
 
     @Override
@@ -125,24 +177,24 @@ public class PostDAOImpl implements PostDAO {
         assert request.getLimit() > 0;
         assert request.getUsername() != null;
 
-        List<Post> userPosts = hardCodedPosts.stream()
-                .filter(post -> post.getOriginatingUser().getUsername()
-                        .equals(request.getUsername()))
-                .collect(Collectors.toList());
+//        List<Post> userPosts = hardCodedPosts.stream()
+//                .filter(post -> post.getOriginatingUser().getUsername()
+//                        .equals(request.getUsername()))
+//                .collect(Collectors.toList());
 
         List<Post> responsePosts = new ArrayList<>(request.getLimit());
 
         boolean hasMorePages = false;
 
-        if (request.getLimit() > 0) {
-            int feedIndex = getFeedStartingIndex(request.getLastPost(), userPosts);
-
-            for (int limitCounter = 0; feedIndex < userPosts.size() && limitCounter < request.getLimit(); feedIndex++, limitCounter++) {
-                responsePosts.add(userPosts.get(feedIndex));
-            }
-
-            hasMorePages = feedIndex < userPosts.size();
-        }
+//        if (request.getLimit() > 0) {
+//            int feedIndex = getFeedStartingIndex(request.getLastPost(), userPosts);
+//
+//            for (int limitCounter = 0; feedIndex < userPosts.size() && limitCounter < request.getLimit(); feedIndex++, limitCounter++) {
+//                responsePosts.add(userPosts.get(feedIndex));
+//            }
+//
+//            hasMorePages = feedIndex < userPosts.size();
+//        }
 
         return new StoryResponse(responsePosts, hasMorePages);
     }
@@ -165,19 +217,19 @@ public class PostDAOImpl implements PostDAO {
         return new MakePostResponse(true, "Post successfully enqueued.");
     }
 
-    private int getFeedStartingIndex(Post lastPost, List<Post> allPosts){
-        int feedIndex = 0;
-        if (lastPost != null) {
-            // This is a paged request for something after the first page. Find the first item
-            // we should return
-            for (int i = 0; i < allPosts.size(); i++) {
-                if(lastPost.equals(allPosts.get(i))) {
-                    // We found the index of the last item returned last time. Increment to get
-                    // to the first one we should return
-                    feedIndex = i + 1;
-                }
-            }
-        }
-        return feedIndex;
-    }
+//    private int getFeedStartingIndex(Post lastPost, List<Post> allPosts){
+//        int feedIndex = 0;
+//        if (lastPost != null) {
+//            // This is a paged request for something after the first page. Find the first item
+//            // we should return
+//            for (int i = 0; i < allPosts.size(); i++) {
+//                if(lastPost.equals(allPosts.get(i))) {
+//                    // We found the index of the last item returned last time. Increment to get
+//                    // to the first one we should return
+//                    feedIndex = i + 1;
+//                }
+//            }
+//        }
+//        return feedIndex;
+//    }
 }

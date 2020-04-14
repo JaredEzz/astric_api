@@ -31,7 +31,7 @@
 ////        Faker faker = new Faker();
 ////        for (int i = 0; i < 24; i++) {
 ////            String followee = faker.name().firstName().toLowerCase();
-//            followingDAO.writeToFollowTable("jaredhasson","Beatriz");
+//            followingDAO.writeToFollowTable("jaredhasson","jaredhasson");
 ////        }
 //    }
 //
