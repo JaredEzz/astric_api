@@ -14,6 +14,7 @@ public class FeedRequest {
         this.limit = limit;
         this.username = username;
         this.lastPost = lastPost;
+        this.authToken = authToken;
     }
 
     public int getLimit() {

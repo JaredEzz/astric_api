@@ -35,6 +35,7 @@ public class PostDAOImpl implements PostDAO {
     AmazonDynamoDB client;
     DynamoDB dynamoDB;
     Table feedTable;
+    Table storyTable;
     UserDAOImpl userDAO;
     FollowingDAOImpl followingDAO;
 
@@ -42,6 +43,7 @@ public class PostDAOImpl implements PostDAO {
         this.client = AmazonDynamoDBClientBuilder.standard().withRegion(Regions.US_WEST_2).build();
         this.dynamoDB = new DynamoDB(client);
         this.feedTable = dynamoDB.getTable("Feed");
+        this.storyTable = dynamoDB.getTable("Story");
         this.userDAO = new UserDAOImpl();
         this.followingDAO = new FollowingDAOImpl();
     }
@@ -55,6 +57,7 @@ public class PostDAOImpl implements PostDAO {
         List<String> allFollowers = followingDAO.getAllFollowerUsernames(originatingUsername);
 
         batchWritePostToFeedTable(post, allFollowers);
+        writePostToStoryTable(post, originatingUsername);
 
         return new MakePostResponse(true);
     }
@@ -106,6 +109,20 @@ public class PostDAOImpl implements PostDAO {
                             .withString("timestamp", post.getTimestamp())
                     .withMap("originatingUser",post.getOriginatingUser().toMap())
                     .withString("message",post.getMessage())
+            );
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void writePostToStoryTable(Post post, String originatingUsername) {
+        try {
+            PutItemOutcome outcome = storyTable.putItem(
+                    new Item()
+                            .withPrimaryKey("username", originatingUsername)
+                            .withString("timestamp", post.getTimestamp())
+                            .withMap("originatingUser",post.getOriginatingUser().toMap())
+                            .withString("message",post.getMessage())
             );
         } catch (Exception e) {
             e.printStackTrace();
@@ -172,31 +189,60 @@ public class PostDAOImpl implements PostDAO {
 
     @Override
     public StoryResponse getStory(StoryRequest request) {
-        //check user, get all posts with that user as originating user
-        //paginated
         assert request.getLimit() > 0;
         assert request.getUsername() != null;
-
-//        List<Post> userPosts = hardCodedPosts.stream()
-//                .filter(post -> post.getOriginatingUser().getUsername()
-//                        .equals(request.getUsername()))
-//                .collect(Collectors.toList());
-
-        List<Post> responsePosts = new ArrayList<>(request.getLimit());
-
-        boolean hasMorePages = false;
-
-//        if (request.getLimit() > 0) {
-//            int feedIndex = getFeedStartingIndex(request.getLastPost(), userPosts);
-//
-//            for (int limitCounter = 0; feedIndex < userPosts.size() && limitCounter < request.getLimit(); feedIndex++, limitCounter++) {
-//                responsePosts.add(userPosts.get(feedIndex));
-//            }
-//
-//            hasMorePages = feedIndex < userPosts.size();
-//        }
-
+        Map<String, Object> result = getStoryPaginated(request.getUsername(), request.getLimit(), request.getLastPost());
+        List<Post> responsePosts = (ArrayList<Post>) result.get("storyPostList");
+        boolean hasMorePages = (boolean) result.get("hasMorePages");
         return new StoryResponse(responsePosts, hasMorePages);
+    }
+
+    public Map<String, Object> getStoryPaginated(String username, int limit, Post lastPost) {
+        Item item;
+        Map<String, AttributeValue> lastEvaluatedKey = null;
+        List<Post> storyPosts = new ArrayList<>();
+        try{
+            QuerySpec spec = (lastPost == null) ? new QuerySpec()
+                    .withKeyConditionExpression("#u = :v_u")
+                    .withNameMap(new NameMap().with("#u", "username"))
+                    .withValueMap(new ValueMap().withString(":v_u", username))
+                    .withScanIndexForward(true)
+                    .withMaxResultSize(limit) :
+                    new QuerySpec()
+                            .withKeyConditionExpression("#u = :v_u")
+                            .withNameMap(new NameMap().with("#u", "username"))
+                            .withValueMap(new ValueMap().withString(":v_u", username))
+                            .withScanIndexForward(true)
+                            .withMaxResultSize(limit)
+                            .withExclusiveStartKey("username", username, "timestamp", lastPost.getTimestamp());
+            ItemCollection<QueryOutcome> outcome = storyTable.query(spec);
+            if (outcome != null) {
+                for (Item value : outcome) {
+                    item = value;
+                    lastEvaluatedKey = outcome.getLastLowLevelResult().getQueryResult().getLastEvaluatedKey();
+                    Map<String, String> userMap = (Map<String, String>) item.get("originatingUser");
+                    Post post = new Post(
+                            new User(
+                                    userMap.get("name"),
+                                    userMap.get("handle"),
+                                    userMap.get("imageUrl"),
+                                    userMap.get("username")
+                            ),
+                            (String) item.get("timestamp"),
+                            (String) item.get("message")
+                    );
+                    storyPosts.add(post);
+                    System.out.println(post.toMap());
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        boolean hasMorePages = lastEvaluatedKey != null;
+        Map<String, Object> result = new HashMap<>();
+        result.put("storyPostList", storyPosts);
+        result.put("hasMorePages", hasMorePages);
+        return result;
     }
 
     @Override
@@ -216,6 +262,7 @@ public class PostDAOImpl implements PostDAO {
         System.out.println("Message ID: " + msgId);
         return new MakePostResponse(true, "Post successfully enqueued.");
     }
+
 
 //    private int getFeedStartingIndex(Post lastPost, List<Post> allPosts){
 //        int feedIndex = 0;
