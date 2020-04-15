@@ -11,13 +11,12 @@ import static org.junit.jupiter.api.Assertions.*;
 class LoginTest {
     @Test
     void testLogin(){
-        LoginRequest loginRequest = new LoginRequest("jaredhasson", "password");
+        LoginRequest loginRequest = new LoginRequest("jaredhasson1200", "password1200");
 
         UserDAO userDAO = new UserDAOImpl();
         LoginResponse loginResponse = userDAO.login(loginRequest);
 
         assertNotNull(loginResponse);
         assertTrue(loginResponse.isSuccess());
-        assertEquals("ae04c02a-bc73-4b58-984d-e5038c6f7c02", loginResponse.getAuthToken());
     }
 }

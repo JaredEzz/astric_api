@@ -32,7 +32,7 @@ public class FollowingDAOImpl implements FollowingDAO {
     public FollowingDAOImpl() {
         this.client = AmazonDynamoDBClientBuilder.standard().withRegion(Regions.US_WEST_2).build();
         this.dynamoDB = new DynamoDB(client);
-        this.table = dynamoDB.getTable("Follows");
+        this.table = dynamoDB.getTable("Follow");
         this.userDAO = new UserDAOImpl();
     }
 
